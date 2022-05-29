@@ -60,10 +60,10 @@ const ProfileCard = () => {
           className="flex flex-col transition-all duration-200 ease-out xl:shadow-lg shadow-cyan-100/50 dark:shadow-cyan-700/50 xl:rounded-lg bg-white dark:bg-dark overflow-hidden"
         >
           <Image
-            src={'/static/images/logo.jpg'}
+            src={'/static/images/logo.png'}
             alt="avatar"
             width="550px"
-            height="350px"
+            height="550px"
             className="object-cover"
             objectPosition="50% 16%"
           />
@@ -119,7 +119,7 @@ const Spotify = ({ data }) => {
 
 const ProfileInfo = () => (
   <div className="hidden xl:block xl:px-6 py-4">
-    <h1 className="text-xl font-semibold text-gray-800 dark:text-white">Tuan Anh (Leo) Huynh</h1>
+    <h1 className="text-xl font-semibold text-gray-800 dark:text-white">Muhammad Iqbal</h1>
     <p className="py-2 text-gray-700 dark:text-gray-400">Learner | Builder</p>
     <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
       <svg
@@ -137,7 +137,7 @@ const ProfileInfo = () => (
         />
       </svg>
 
-      <p className="px-2 text-[15px]">Self-employed - building products</p>
+      <p className="px-2 text-[15px]">Software Engineer</p>
     </div>
 
     <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
@@ -163,9 +163,9 @@ const ProfileInfo = () => (
       </svg>
 
       <p className="px-2 text-[15px]">
-        [::1]:443 - Ha Noi,
+        East Java - Indonesia
         <span className="align-middle flag-vn ml-1">
-          <Twemoji emoji="flag-vietnam" />
+          <Twemoji emoji="flag-indonesia" />
         </span>
       </p>
     </div>
@@ -185,7 +185,7 @@ const ProfileInfo = () => (
           d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
         />
       </svg>
-      <p className="px-2 text-[15px]">huynhtuananh21895@gmail.com</p>
+      <p className="px-2 text-[15px]">dibaliqaja@gmail.com</p>
     </div>
     <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
       <svg
@@ -203,12 +203,12 @@ const ProfileInfo = () => (
         />
       </svg>
       <p className="px-2 text-[15px]">
-        <a target="_blank" href="https://github.com/hta218" rel="noreferrer">
-          gh/hta218
+        <a target="_blank" href="https://github.com/dibaliqaja" rel="noreferrer">
+          gh/dibaliqaja
         </a>
         ,{' '}
-        <a target="_blank" href="https://twitter.com/hta218_" rel="noreferrer">
-          tw/hta218_
+        <a target="_blank" href="https://twitter.com/dibaliqaja" rel="noreferrer">
+          tw/dibaliqaja
         </a>
       </p>
     </div>

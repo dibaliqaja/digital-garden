@@ -1,23 +1,22 @@
 const siteMetadata = {
-  title: "Leo's blog - Leo's coding journey",
-  author: 'Leo Huynh',
-  headerTitle: "Leo's blog - Leo's coding journey",
-  footerTitle: "Leo's blog - Leo's coding journey",
+  title: "Iqbal's blog - Iqbal's digital garden - dibaliqaja",
+  author: 'Muhammad Iqbal',
+  headerTitle: "Iqbal's blog - Iqbal's digital garden - dibaliqaja",
+  footerTitle: "Iqbal's blog - Iqbal's digital garden - dibaliqaja",
   description:
-    "Leo's coding journey - programming, working and life stories through the keyboard of an open minded Software Engineer",
-  snippets: 'Reuseable code snippets collected by Leo',
+    "Iqbal's digital garden - programming, working and life stories through the keyboard of an open minded Software Engineer",
+  snippets: 'Reuseable code snippets collected by Iqbal',
   language: 'en-us',
-  siteUrl: 'https://www.leohuynh.dev',
-  siteRepo: 'https://github.com/hta218/leo-blog',
-  siteLogo: '/static/images/logo.jpg',
-  image: '/static/images/logo.jpg',
-  socialBanner: '/static/images/logo.jpg',
-  email: 'huynhtuananh21895@gmail.com',
-  github: 'https://github.com/hta218',
-  twitter: 'https://twitter.com/hta218_',
-  facebook: 'https://facebook.com/hta218',
-  youtube: 'https://www.youtube.com/channel/UCHXjj6ewfDIjx_Op3hqijlg',
-  linkedin: 'https://www.linkedin.com/in/hta218/',
+  siteUrl: 'https://www.dibaliqaja.my.id',
+  siteRepo: 'https://github.com/dibaliqaja/dilo',
+  siteLogo: '/static/images/logo.png',
+  image: '/static/images/logo.png',
+  socialBanner: '/static/images/logo.png',
+  email: 'dibaliqaja@gmail.com',
+  github: 'https://github.com/dibaliqaja',
+  twitter: 'https://twitter.com/dibaliqaja',
+  facebook: 'https://facebook.com/dibaliqaja',
+  linkedin: 'https://www.linkedin.com/in/dibaliqaja',
   locale: 'en-US',
   analytics: {
     // supports plausible, simpleAnalytics or googleAnalytics
@@ -69,7 +68,7 @@ const siteMetadata = {
     },
   },
   socialAccount: {
-    twitter: 'hta218_',
+    twitter: 'dibaliqaja',
   },
 }
 

@@ -1,0 +1,48 @@
+---
+title: 'Ubah Teks dengan Baris Perintah'
+date: '2022-05-29'
+type: 'bash'
+draft: false
+summary: 'Cara mencari dan mengubah teks di dalam sebuah file menggunakan baris perintah (command line) pada Ubuntu'
+---
+
+Cara mencari dan mengubah teks di dalam sebuah file menggunakan baris perintah (_command line_) pada Ubuntu
+
+Yaitu dapat menggunakan Utilitas bernama _sed_
+
+Utilitas sed adalah sebuah editor yang dapat digunakan untuk membaca atau mengedit satu atau lebih file teks.
+
+Kita dapat menggunakan sintaks berikut untuk menemukan dan mengganti teks dalam file menggunakan terminal di Ubuntu
+
+```bash
+sed -i 's/teks_lama/teks_baru/g' filename.txt
+```
+
+_sed_ merupakan perintah dari utilitas _sed_ itu sendiri
+opsi -i (yang maksudnya in-place) memberi tahu _sed_ untuk menulis perubahan ke file asli
+
+Ekspresi subtitusi memiliki arti sebagai berikut:
+- s : Awal dari ekspresi subtitusi
+- teks_lama : Mewakili kata atau substring yang akan diganti (bisa juga berupa regular expression).
+- teks_baru : Merupakan kata  atau substring pengganti teks lama.
+- g : Mewakili global yaitu mengganti semua kata yang mengandung kata yang ingin diganti.
+- i : Mewakili ignoreCase seperti pencarian dan penggantian case-insensitive. contoh (sed -i 's/teks_lama/teks_baru/gi' filename.txt) (diletakkan setelah ekspresi g)
+
+Sebagai contoh, anggap saja direktori kerja kita saat ini adalah /var/www dan kita memiliki file teks bernama "sample.txt" di dalamnya, yang hanya berisi teks "Halo Kita".
+
+Sekarang jika kita ingin mengganti setiap kemunculan kata "Halo" dengan kata "Hai" di file "sample.txt", kita cukup menggunakan perintah sed berikut.
+
+```bash
+sed -i 's/Halo/Hai/gi' sample.txt
+```
+
+Atau, kita juga bisa menggunakan jalur absolut, dengan perintah berikut.
+
+```bash
+sed -i 's/Halo/Hai/gi' /var/www/sample.txt
+```
+
+Kedua perintah akan memiliki efek yang sama, karena direktori kerja saat ini tidak masalah ketika kita menggunakan jalur absolut.
+Jalur apa pun yang dimulai dengan garis miring / adalah jalur absolut.
+
+[Referensi](https://www.tutorialrepublic.com/faq/how-to-find-and-replace-text-within-a-file-using-command-line-in-ubuntu.php)

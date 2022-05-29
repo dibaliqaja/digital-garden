@@ -33,20 +33,20 @@ export default function Home({ posts }) {
 
             <div className="text-lg leading-8 text-gray-600 dark:text-gray-400">
               <h1 className="text-neutral-900 dark:text-neutral-200">
-                I'm <span className="font-medium">Tuan Anh Huynh</span> - an open-minded{' '}
-                <span className="font-medium">Software Engineer</span> in{' '}
-                <span className="font-medium hidden">Ha Noi, VN</span>
+                I'm <span className="font-medium">Muhammad Iqbal</span> - a{' '}
+                <span className="font-medium">Software Engineer</span> from Indonesia{' '}
+                <span className="font-medium hidden">East Java, ID</span>
                 <span className="align-middle flag-vn">
-                  <Twemoji emoji="flag-vietnam" />
+                  <Twemoji emoji="flag-indonesia" />
                 </span>
               </h1>
               <TypedBios />
               <p className="mt-4 mb-8">
-                I started my coding journey in late 2016 with C/C++/Java in college
+                I started my coding journey in late 2017 with C/C++/Java in college
                 <br />
-                I had my first job as a Python coding mentor in 2017
+                I had my first job as a PHP coding mentor in 2019 at a vocational school
                 <br />
-                I'm in love with the JS ecosystem, Web dev, and eCommerce
+                I'm in love with the Web Ecosystem and Web Development
                 <br />
                 I'm writing this blog to note down and share what I've learned as a SE
               </p>

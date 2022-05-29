@@ -1,125 +1,80 @@
 const timelineData = [
   {
-    time: 'Mar 2022 - now',
-    role: 'Self-employed',
-  },
-  {
-    time: 'May 2021 - Feb 2022',
-    role: 'Software Engineer',
-    company: 'FoxEcom',
-    companyURL: 'https://foxecom.com/',
+    time: 'Feb 2022 - Now',
+    role: 'Software Engineer (Web)',
+    company: 'Kapanlagi Youniverse',
+    companyURL: 'https://kly.id/',
+    companyBio: 'Trusted News Publisher in Indonesia',
     works: [
       <>
-        Built{' '}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://themeforest.net/item/minimog-the-high-converting-shopify-theme/33380968"
-        >
-          Minimog
+        Maintain, Fixing Bug and Added New Features with Product and QA Team on{' '}
+        <a target="_blank" rel="noopener noreferrer" href="https://liputan6.com/">
+          Liputan6.com
         </a>{' '}
-        - The Next Generation Shopify Theme (Weekly Bestseller and Top Trending in eCommerce
-        category)
-      </>,
-      <>
-        Built{' '}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://apps.shopify.com/foxecom-boost-sales"
-        >
-          Fox Kit Shopify App
+        <a target="_blank" rel="noopener noreferrer" href="https://fimela.com/">
+          Fimela.com
         </a>{' '}
-        - The upsells and boost conversion tools that is built to support Minimog theme
+        <a target="_blank" rel="noopener noreferrer" href="https://bola.com/">
+          Bola.com
+        </a>{' '}
+        - There are a News Portal Media Group system owned by the company.
       </>,
     ],
   },
   {
-    time: 'May 2020 - Apr 2020',
-    role: 'Frontend Engineer',
-    company: 'Coc Coc',
-    companyURL: 'https://coccoc.com/',
-    companyBio: '#1 web browser in Viet Nam with more than 25M users',
+    time: 'Jan 2021 - Mar 2021',
+    role: 'Sofware Engineer (Web)',
+    company: 'PT. Eannovate Creative Technology',
+    companyURL: 'https://www.eannovate.com/',
+    companyBio: 'Company that provides IT and Creative solution for start-ups and companies.',
     works: [
       <>
         Built{' '}
-        <a target="_blank" rel="noopener noreferrer" href="https://coccoc.com/webhp">
-          Coc Coc's newsfeed
+        <a target="_blank" rel="noopener noreferrer" href="http://www.efield.id/">
+          e-Field CMS
         </a>{' '}
-        (with Team Leader)
+        (with Team)
       </>,
-      `Maintain and optimize Newtab's widget and performance`,
+      <>
+        Maintain and Fixing Bugs{' '}
+        <a target="_blank" rel="noopener noreferrer" href="https://www.cocrea.co.id/">
+          Cocrea CMS
+        </a>{' '}
+        (with Team)
+      </>,
+      `Built, Fixing Bug, Added New Features on Web Company and eCommerce for client needed`,
     ],
   },
   {
-    time: 'Aug 2018 - Apr 2020',
-    role: 'Fullstack Developer',
-    company: 'Pagefly',
-    companyURL: 'https://apps.shopify.com/pagefly',
-    companyBio: 'Top 3 Page Builder app on Shopify',
+    time: 'Mar 2020 - Apr 2020',
+    role: 'Software Engineer Intern (Web)',
+    company: 'PT. Global Informatika Indonesia',
+    companyURL: 'https://www.linkedin.com/company/pt-global-informatika-indonesia',
+    companyBio: 'Partner to support your IT need. Focus on Software and Business Analyst.',
     works: [
-      `Built Pagefly's Analytics APIs`,
-      <>
-        Built{' '}
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/sellersmith/slider-x">
-          Slider-x
-        </a>
-      </>,
+      `Maintain and optimize Web Company System for client needed`,
+      `Learn and Built Simple CMS and API with Laravel`,
     ],
   },
   {
-    time: 'May 2017 - Jul 2018',
-    role: 'Coding Instructor and Developer',
-    company: 'MindX - Technology School',
-    companyURL: 'https://mindx.edu.vn/',
-    companyBio: '(aka Techkids)',
-    works: [
-      <>
-        Built{' '}
-        <a target="_blank" rel="noopener noreferrer" href="http://lok.vn">
-          Love of Knowledge
-        </a>{' '}
-        (Front-end part)
-      </>,
-      <>
-        Built{' '}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://hta218.github.io/get-a-room-api-docs/"
-        >
-          Room Finder APIs
-        </a>
-      </>,
-      <>
-        Built{' '}
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/hta218/Travel_Egypt">
-          Travel Egypt
-        </a>{' '}
-        - a picture puzzle game made by pygame (Python)
-      </>,
-      'Tech Python fundamentals and Python web development',
-    ],
+    time: 'Sep 2017 - Aug 2021',
+    role: 'Study Informatics Engineering',
+    company: 'PGRI Ronggolawe University',
+    companyURL: 'https://www.unirow.ac.id/',
   },
   {
-    time: 'Sep 2013 - Feb 2019 (Move to Ha Noi city)',
-    role: 'Study Electronics and Telecommunications',
-    company: 'Hanoi University of Science and Technology',
-    companyURL: 'https://www.hust.edu.vn/',
-  },
-  {
-    time: 'Before 2013',
+    time: 'Mar 1999',
     role: (
       <>
-        Grown up in{' '}
+        Born and Grow up in{' '}
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href="https://en.wikipedia.org/wiki/M%E1%BB%99c_Ch%C3%A2u_District"
+          href="https://id.wikipedia.org/wiki/Kabupaten_Tuban/"
         >
-          Moc Chau
+          Tuban District
         </a>{' '}
-        District
+        East Java
       </>
     ),
   },
