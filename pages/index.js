@@ -78,7 +78,7 @@ export default function Home({ posts }) {
         </div>
       </div>
       <div className="border-t border-gray-200 dark:border-gray-700">
-        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+        <ul className="pt-3 divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && 'No posts found.'}
           {posts.slice(0, MAX_DISPLAY).map((frontMatter) => {
             const { slug, date, title, summary, tags } = frontMatter

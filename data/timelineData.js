@@ -17,7 +17,7 @@ const timelineData = [
         <a target="_blank" rel="noopener noreferrer" href="https://bola.com/">
           Bola.com
         </a>{' '}
-        - There are a News Portal Media Group system owned by the company.
+        - It's the News Portal Media Group system owned by the company.
       </>,
     ],
   },
@@ -42,7 +42,7 @@ const timelineData = [
         </a>{' '}
         (with Team)
       </>,
-      `Built, Fixing Bug, Added New Features on Web Company and eCommerce for client needed`,
+      `Built, Fixing Bug and Added New Features on Web Company or eCommerce System for client needed`,
     ],
   },
   {
@@ -52,8 +52,8 @@ const timelineData = [
     companyURL: 'https://www.linkedin.com/company/pt-global-informatika-indonesia',
     companyBio: 'Partner to support your IT need. Focus on Software and Business Analyst.',
     works: [
-      `Maintain and optimize Web Company System for client needed`,
-      `Learn and Built Simple CMS and API with Laravel`,
+      `Maintain and optimize client site`,
+      `Built, Fixing Bug and Added New Features on Web Company System for client needed`,
     ],
   },
   {
@@ -61,6 +61,10 @@ const timelineData = [
     role: 'Study Informatics Engineering',
     company: 'PGRI Ronggolawe University',
     companyURL: 'https://www.unirow.ac.id/',
+    works: [
+      `Bachelor Degree (S-1) in Computer Science    `,
+      `Degree Grade: With Compliments      `,
+    ],
   },
   {
     time: 'Mar 1999',

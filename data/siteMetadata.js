@@ -4,7 +4,7 @@ const siteMetadata = {
   headerTitle: "Iqbal's blog - Iqbal's digital garden - dibaliqaja",
   footerTitle: "Iqbal's blog - Iqbal's digital garden - dibaliqaja",
   description:
-    "Iqbal's digital garden - programming, working and life stories through the keyboard of an open minded Software Engineer",
+    "Iqbal's digital garden - programming, working and life stories through the keyboard of an Software Engineer",
   snippets: 'Reuseable code snippets collected by Iqbal',
   language: 'en-us',
   siteUrl: 'https://www.dibaliqaja.my.id',
