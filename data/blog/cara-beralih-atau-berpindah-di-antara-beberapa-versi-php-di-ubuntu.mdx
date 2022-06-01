@@ -1,8 +1,8 @@
 ---
 title: Cara Beralih atau Berpindah di antara beberapa versi PHP di Ubuntu/Linux
-date: '2022-05-30'
+date: '2022-06-01'
 tags: ['php','ubuntu','linux','beginners','tutorial']
-draft: true
+draft: false
 summary: Terkadang, versi terbaru dari paket atau aplikasi yang kita pasang (install) mungkin tidak berfungsi sesuai dengan yang diharapkan. Aplikasi kita mungkin tidak kompatibel dengan paket yang diperbarui dan hanya mendukung paket versi yang lebih lama tertentu.
 images: ['/static/images/quit.jpg']
 authors: ['default']
@@ -11,19 +11,26 @@ authors: ['default']
 import Twemoji from './Twemoji.js'
 import UnsplashLicense from './UnsplashLicense.js'
 
-Pada pembahasan kali ini, saya akan mencoba untuk memandu anda melalui langkah-langkah bagaimana cara beralih di antara berbagai versi PHP yang sudah terpasang pada sistem Ubuntu/Linux ataupun turunannya.
-Pada panduan ini secara resmi pada versi Ubuntu 20.04 LTS. Akan tetapi dapat dimungkinkan bekerja pada versi Ubuntu yang lebih lama atau yang lebih baru.
+Pada pembahasan kali ini, kita akan mencoba, bagaimana cara beralih di antara berbagai 
+versi PHP yang sudah terpasang pada sistem Ubuntu/Linux ataupun turunannya.
+Pada panduan ini, saya mencobanya pada versi Ubuntu 20.04 LTS.
+Akan tetapi dapat dimungkinkan bekerja pada versi Ubuntu yang lebih lama atau yang lebih baru.
 
-## Pengantar
-Terkadang, versi terbaru dari paket atau aplikasi yang anda pasang (_install_) mungkin tidak berfungsi sesuai dengan yang anda harapkan. Aplikasi anda mungkin tidak kompatibel dengan paket yang diperbarui dan hanya mendukung paket versi yang lebih lama tertentu. 
-Dari kejadian tersebut, anda tidak perlu menurunkan ataupun menghapus (_uninstall_) versi PHP yang sebelumnya apabila disuatu hari anda masih membutuhkannya. Anda cukup beralih ke versi PHP yang aplikasi perlukan hanya dalam beberapa menit saja.
+### Pengantar
+Terkadang, versi terbaru dari paket atau aplikasi yang kita pasang (_install_)
+mungkin tidak berfungsi sesuai dengan yang diharapkan. Aplikasi kita mungkin tidak kompatibel dengan paket yang diperbarui
+dan hanya mendukung paket versi yang lebih lama tertentu. 
 
-## Prasyarat
+Dari kejadian tersebut, kita tidak perlu menurunkan ataupun menghapus 
+(_uninstall_) versi PHP yang sebelumnya. Karena apabila disuatu hari kita masih membutuhkannya,
+kita cukup beralih ke versi PHP yang aplikasi perlukan hanya dengan beberapa langkah saja.
+
+### Prasyarat
 1. Sebuah sistem Ubuntu/Linux yang sudah berjalan atau sistem turunannya.
-2. Pada tahapan kali ini saya tidak akan menjelaskan tentang bagaimana cara memasang PHP. Pastikan anda telah memasang beberapa versi PHP di sistem anda.
+2. Pada tahapan kali ini saya tidak akan menjelaskan tentang bagaimana cara memasang PHP. Pastikan pada sistem kita telah terpasang beberapa versi PHP.
 
-## Mari Kita Mulai
-1. Periksa versi bawaan PHP yang sudah terpasang pada sistem anda dengan menggunakan perintah seperti berikut:
+### Mari Kita Mulai
+1. Periksa versi bawaan PHP yang sudah terpasang pada sistem kita dengan menggunakan perintah sebagai berikut:
 ```bash
 php -v
 ```
@@ -37,12 +44,18 @@ Zend Engine v3.3.33, Copyright (c) 1998-2018 Zend Technologies
 	with Zend OPcache v7.3.33-1+ubuntu20.04.1+deb.sury.org+1, Copyright (c) 1999-2018, by Zend Technologies
 ```
 
-Seperti yang anda lihat, PHP yang terinstal yaitu versi 7.3
-*Terdapat versi PHP 7.3 pada sistem saya, ini bisa berbeda di sistem anda. Jadi jangan khawatir. ;)
-	
-Aplikasi anda mungkin memerlukan versi yang lebih tinggi dari yang sekarang (dalam hal ini aplikasi saya membutuhkan dukungan PHP 7.4) dan aplikasi saya tidak mendukung versi PHP 7.3. Dalam hal ini, saya menyarankan memiliki PHP versi 7.3 dan versi PHP 7.4, sehingga anda dapat dengan mudah beralih di antara versi yang didukung kapan saja.
+Seperti yang kita lihat, PHP yang terinstal yaitu __versi 7.3__
 
-2. Anda dapat menjalankan perintah berikut dibawah untuk mengatur versi PHP yang sudah terinstal pada sistem anda dan ingin anda gunakan secara bawaan. (Dalam hal ini saya memilih 0 untuk versi PHP 7.4). Ketikkan 0 lalu enter maka versi PHP akan berubah.
+_Terdapat versi PHP 7.3 pada sistem saya, ini bisa berbeda di sistem anda. Jadi jangan khawatir. ;)_
+	
+Aplikasi kita mungkin memerlukan versi yang lebih tinggi dari yang sekarang 
+(_dalam hal ini aplikasi saya membutuhkan dukungan versi PHP 7.4_) 
+dan aplikasi saya tidak mendukung versi PHP 7.3. 
+
+Dalam hal ini, saya memiliki PHP versi 7.3 dan versi PHP 7.4, 
+sehingga kita dapat dengan mudah beralih di antara versi yang didukung kapan saja.
+
+2. Kita dapat menjalankan perintah berikut untuk mengatur versi PHP yang sudah ter-_install_ pada sistem dan ingin kita gunakan secara bawaan.
 ```bash
 sudo update-alternatives --config php
 ```
@@ -58,11 +71,25 @@ There are 2 choices for the alternative php (providing /usr/bin/php).
 	* 1            /usr/bin/php7.3   73        manual mode
 	  2            /usr/bin/php7.4   74        manual mode
 
+Press <enter> to keep the current choice[*], or type selection number:
+```
+
+3. Ketikkan 0 lalu _enter_ maka versi PHP seketika akan berubah. (_Dalam hal ini saya memilih 0 untuk versi PHP 7.4_).
+
+```bash
+There are 2 choices for the alternative php (providing /usr/bin/php).
+
+	 Selection    Path             Priority   Status
+	------------------------------------------------------------
+	  0            /usr/bin/php7.4   74        auto mode
+	* 1            /usr/bin/php7.3   73        manual mode
+	  2            /usr/bin/php7.4   74        manual mode
+
 Press <enter> to keep the current choice[*], or type selection number: 0
 update-alternatives: using /usr/bin/php7.4 to provide /usr/bin/php (php) in auto mode
 ```
 
-3. Sekarang, coba cek lagi dengan perintah seperti berikut apakah versi PHP bawaan sudah berubah atau tidak.
+4. Sekarang, coba cek lagi dengan perintah sebagai berikut apakah versi PHP bawaan sudah berubah atau tidak.
 ```bash
 php -v
 ```
