@@ -2,13 +2,15 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import siteMetadata from '@/data/siteMetadata'
 
-export const PageSeo = ({ title, description }) => {
+export const PageSeo = ({ title, description, keywords, google }) => {
   const router = useRouter()
   return (
     <Head>
       <title>{title}</title>
       <meta name="robots" content="follow, index" />
       <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
+      <meta name="google-site-verification" content={google} />
       <meta property="og:url" content={`${siteMetadata.siteUrl}${router.asPath}`} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={siteMetadata.title} />

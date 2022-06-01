@@ -5,6 +5,8 @@ const siteMetadata = {
   footerTitle: "Iqbal's blog - Iqbal's digital garden - dibaliqaja",
   description:
     "Iqbal's digital garden - programming, working and life stories through the keyboard of an Software Engineer",
+  keywords: 'Iqbal, Muhammad Iqbal, Iqbal Muhammad, dibaliqaja, @dibaliqaja, Iqbal Profile',
+  google: 'MNPR1j6Mzfbp04i4esCkdCCQUEbsQg9XZIwtvRDXTxA',
   snippets: 'Reuseable code snippets collected by Iqbal',
   language: 'en-us',
   siteUrl: 'https://www.dibaliqaja.my.id',

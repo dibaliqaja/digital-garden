@@ -21,7 +21,12 @@ export default function Home({ posts }) {
     'bg-gradient-to-r from-yellow-600 to-red-600 dark:bg-gradient-to-l dark:from-emerald-500 dark:to-lime-600'
   return (
     <>
-      <PageSeo title={siteMetadata.title} description={siteMetadata.description} />
+      <PageSeo
+        title={siteMetadata.title}
+        description={siteMetadata.description}
+        keywords={siteMetadata.keywords}
+        google={siteMetadata.google}
+      />
       <div className="divide-y divide-gray-200 dark:divide-gray-700 mt-8 md:mt-16">
         <div className="my-4 pt-6 pb-8 space-y-2 md:space-y-5 xl:grid xl:grid-cols-3">
           <div className="xl:col-span-2 pr-8">

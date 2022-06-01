@@ -12,7 +12,6 @@ export default function Footer() {
           <SocialIcon kind="linkedin" href={siteMetadata.linkedin} size="6" />
           <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} size="6" />
           <SocialIcon kind="facebook" href={siteMetadata.facebook} size="6" />
-          <SocialIcon kind="youtube" href={siteMetadata.youtube} size="6" />
         </div>
         <div className="flex mb-2 space-x-2 text-sm text-gray-500 dark:text-gray-400">
           <div>{`Copyright © ${new Date().getFullYear()}`}</div>
