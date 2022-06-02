@@ -1,0 +1,124 @@
+---
+title: "Catatan Sintaks Blok Kode Markdown"
+date: '2022-06-02'
+type: 'markdown'
+draft: false
+summary: "Sintaks markdown blok kode dasar dan lanjutan"
+---
+
+### Sintaks Dasar
+
+Gunakan _triple backticks_ untuk membuat blok kode dalam _markdown_
+
+````
+```language
+kode ada di sini
+```
+````
+
+Contoh:
+
+````
+```javascript
+function debounce(func, timeout = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+```
+````
+
+Akan muncul seperti ini:
+
+```javascript
+function debounce(func, timeout = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+```
+
+### Nama File
+
+Tambahkan `:filename.ext` setelah `language` untuk dirender dengan label nama file di bagian atas blok kode
+
+Contoh:
+
+````
+```java:GetRowValue.java
+private String[] getRowValue(Integer i, List<BillDetail> billDetail) {
+  String[] rowValue = new String[5];
+  rowValue[0] = (i).toString();
+  i = i - 1;
+
+  rowValue[1] = billDetail.get(i).getProductName();
+  rowValue[2] = billDetail.get(i).getQuantity().toString();
+  rowValue[3] = new DecimalFormat("#,###").format(Integer.parseInt(billDetail.get(i).getProductPrice()));   
+  rowValue[4] = new DecimalFormat("#,###").format(billDetail.get(i).getSubTotal());
+
+  return rowValue;
+}
+```
+````
+
+Akan muncul seperti ini:
+
+```java:GetRowValue.java
+private String[] getRowValue(Integer i, List<BillDetail> billDetail) {
+  String[] rowValue = new String[5];
+  rowValue[0] = (i).toString();
+  i = i - 1;
+
+  rowValue[1] = billDetail.get(i).getProductName();
+  rowValue[2] = billDetail.get(i).getQuantity().toString();
+  rowValue[3] = new DecimalFormat("#,###").format(Integer.parseInt(billDetail.get(i).getProductPrice()));   
+  rowValue[4] = new DecimalFormat("#,###").format(billDetail.get(i).getSubTotal());
+
+  return rowValue;
+}
+```
+
+### Highlighting Baris dan Penomoran Baris
+
+- Tambahkan properti `{numbers}` setelah `language` untuk _highlight_ baris
+- Tambahkan properti `showLineNumbers` setelah `language` untuk membuat penomoran baris
+
+Contoh:
+
+````
+```html {1,4-6,10} showLineNumbers
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello world</title>
+  </head>
+  <body>
+    <h1>Hello world</h1>
+  </body>
+</html>
+```
+````
+
+Akan muncul seperti ini:
+
+```html {1,4-6,10} showLineNumbers
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello world</title>
+  </head>
+  <body>
+    <h1>Hello world</h1>
+  </body>
+</html>
+```

@@ -15,7 +15,7 @@ Utilitas _sed_ adalah sebuah aliran editor yang dapat digunakan untuk membaca at
 Kita dapat menggunakan sintaks berikut untuk menemukan dan mengganti teks dalam file menggunakan terminal di Ubuntu
 
 ```bash
-sed -i 's/teks_lama/teks_baru/g' filename.txt
+sed -i 's/teks_lama/teks_baru/g' filename.txt   
 ```
 
 _sed_ merupakan perintah dari utilitas _sed_ itu sendiri,
@@ -33,16 +33,14 @@ Sebagai contoh, anggap saja direktori kerja kita saat ini adalah _/var/www_ dan 
 Sekarang jika kita ingin mengganti setiap kemunculan kata "Halo" dengan kata "Hai" di file "sample.txt", kita cukup menggunakan perintah sed berikut.
 
 ```bash
-sed -i 's/Halo/Hai/gi' sample.txt
+sed -i 's/Halo/Hai/gi' sample.txt   
 ```
 
 Atau, kita juga bisa menggunakan jalur absolut, dengan perintah berikut.
 
 ```bash
-sed -i 's/Halo/Hai/gi' /var/www/sample.txt
+sed -i 's/Halo/Hai/gi' /var/www/sample.txt  
 ```
 
 Kedua perintah akan memiliki efek yang sama, karena direktori kerja saat ini tidak menjadi persoalan menggunakan jalur absolut.
 Jalur apa pun yang dimulai dengan garis miring / merupakan jalur absolut.
-
-[Referensi](https://www.tutorialrepublic.com/faq/how-to-find-and-replace-text-within-a-file-using-command-line-in-ubuntu.php)
