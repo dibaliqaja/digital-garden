@@ -16,10 +16,10 @@ export default function Projects() {
             Projects
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            My open source side projects and stuff that I build
+            My open source side projects that I built
           </p>
         </div>
-        <div className="container py-12">
+        {/* <div className="container py-12">
           <h3 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 mb-4">
             Work
           </h3>
@@ -35,11 +35,11 @@ export default function Projects() {
               />
             ))}
           </div>
-        </div>
+        </div> */}
         <div className="container py-12">
-          <h3 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 mb-4">
-            Side Projects
-          </h3>
+          {/* <h3 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 mb-4">
+            My Projects
+          </h3> */}
           <div className="flex flex-wrap -m-4">
             {sideProjects.map((project) => (
               <ProjectCard
