@@ -207,8 +207,8 @@ const ProfileInfo = () => (
           gh/dibaliqaja
         </a>
         ,{' '}
-        <a target="_blank" href="https://twitter.com/dibaliqaja" rel="noreferrer">
-          tw/dibaliqaja
+        <a target="_blank" href="https://linkedin.com/in/dibaliqaja" rel="noreferrer">
+          in/dibaliqaja
         </a>
       </p>
     </div>
