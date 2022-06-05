@@ -1,9 +1,9 @@
 ---
 title: Menambahkan Beberapa Perubahan Lagi pada Commit-an Git Terakhir Tanpa Membuat Commit-an Baru
-date: '2022-05-31'
-tags: ['git','engineer','developer','beginners','tutorial']
-draft: true
-summary: Ada kalanya kita ingin mengubah atau menambah beberapa baris kode atau hanya sekedar tambahan spasi mungkin dari kode yang sudah kita commit dan sudah terlanjur kita push ke remote.
+date: '2022-06-05'
+tags: ['git','github','gitlab','engineer','developer','beginners','tutorial']
+draft: false
+summary: Adakalanya kita ingin mengubah atau menambah beberapa baris kode atau hanya sekedar tambahan spasi mungkin dari kode yang sudah kita commit dan sudah terlanjur kita push ke remote.
 images: ['/static/images/quit.jpg']
 authors: ['default']
 ---
@@ -12,11 +12,17 @@ import Twemoji from './Twemoji.js'
 import UnsplashLicense from './UnsplashLicense.js'
 
 ### Pengantar
-Adakalanya kita ingin mengubah atau menambah beberapa baris kode atau hanya sekedar tambahan spasi mungkin dari kode yang sudah kita *commit* dan sudah terlanjur kita *push* ke *remote*.
-Disini kita ingin melakukan kegiatan tersebut akan tetapi bagaimana caranya kita tanpa membuat *commit*-an baru yang berbeda agar alur atau *history* dari *commit*-an kita tetap terlihat "rapi" dan tertata.
+Adakalanya kita ingin mengubah atau menambah beberapa baris kode atau hanya 
+sekedar tambahan spasi mungkin dari kode yang sudah kita *commit* dan sudah terlanjur 
+kita *push* ke *remote*.
+Disini kita ingin melakukan kegiatan tersebut, 
+akan tetapi bagaimana caranya kita tanpa membuat *commit*-an baru yang berbeda 
+agar alur atau *history* dari *commit*-an kita tetap terlihat "rapi" dan tertata.
 
 ### Mari kita mulai
-Baik kita mulai sekarang langsung, pada bagian ini saya asumsikan kita bekerja pada *branch* *feature* kita sendiri (sebagai contoh) kita mempunyai riwayat *commit* seperti ini:
+Baik kita mulai, pada bagian ini saya asumsikan kita 
+bekerja pada *branch* *feature* kita sendiri (sebagai contoh) kita mempunyai 
+riwayat *commit* seperti ini:
 
 ```bash
 be43bz4 feat: penambahan update data master kota
@@ -24,7 +30,8 @@ be43bz4 feat: penambahan update data master kota
 a53da32 chore: update setting environment local
 ```
 
-dan pada bagian *commit*-an be43bz4 kita lupa ada *typo* misalkan pada kode kita. Apabila kita memperbaikinya dan mencoba membuat *commit*-an baru mungkin akan terlihat seperti ini:
+Kemudian pada bagian *commit*-an `be43bz4` kita lupa ada *typo* misalkan pada kode kita. 
+Apabila kita memperbaikinya dan mencoba membuat *commit*-an baru mungkin akan terlihat seperti ini:
 
 ```bash
 a2d4ls3 fix: typo title kota
@@ -33,26 +40,33 @@ be43bz4 feat: penambahan update data master kota
 a53da32 chore: update setting environment local
 ```
 
-kita tidak ingin *history* *commit*-an git kita seperti itu. Kita ingin tetap pada bagian *commit*-an be43bz4, dengan mengganti potongan kecil kode tadi. Ya itu mungkin tidak masalah apabila di kasus lain tim kamu ingin menambahkan *commit*-an baru. Akan tetapi pada kasus ini kita ingin menambahkan potongan kode tersebut pada *commit*-an terakhir kita tanpa membuat nama *commit*-an baru. Nah bagaimananya caranya?
-kita dapat memanfaatkan fitur amandemen (*--amend*) pada git.
+Kita tidak ingin *history* *commit*-an git seperti itu. 
+Kita ingin tetap pada bagian *commit*-an `be43bz4`, 
+dengan mengganti potongan kecil kode tadi. 
+Ya, itu mungkin tidak masalah apabila di kasus lain tim kamu ingin menambahkan *commit*-an baru. 
 
-git bisa melakukannya seperti ini
-cukup tambahkan dahulu file yang sudah dimodifikasi:
+Akan tetapi pada kasus ini kita ingin menambahkan potongan kode tersebut pada *commit*-an terakhir kita tanpa membuat nama *commit*-an baru. 
+Nah bagaimananya caranya?
+kita dapat memanfaatkan fitur amandemen (`--amend`) pada git.
+
+Oke kita bisa melakukannya seperti ini,
+cukup tambahkan dahulu file yang sudah dimodifikasi dengan perintah berikut:
 ```bash
 $ (features/update_city) git add .
 ```
 
-dan apabila sudah ditambahkan, kita dapat mengamandemenkan *commit*-an dengan perintah berikut
+Kemudian apabila sudah ditambahkan, 
+kita dapat meng-amandemen-kan *commit*-an dengan perintah berikut:
 ```bash
 $ (features/update_city) git commit --amend
 ```
 
-Setelah menjalankan perintah tersebut, akan muncul pada terminal kita kurang lebih seperti ini
+Setelah menjalankan perintah tersebut, akan muncul pada terminal kita kurang lebih seperti ini:
 ```bash
 # Please enter the commit message for your changes. Lines starting
 # with ‘#’ will be ignored, and an empty message aborts the commit.
 #
-# Author: Iqbal M <iqbal@m.com>
+# Author: Muhammad Iqbal <dibaliqaja@gmail.com>
 # Date: Sat May 22 21:20:43 2022 -0300
 #
 # On branch some_branch
@@ -62,25 +76,30 @@ Setelah menjalankan perintah tersebut, akan muncul pada terminal kita kurang leb
 # modified: city.go
 ```
 
-pada bagian ini kita dapat memodifikasi pesan *commit*-an kita, lakukan sesuai keinginan atau pada kali ini kita tidak mengeditnya lalu langsung menyimpannya tanpa mengubahnya dengan menekan tombol ctrl+x kemudian y
+Pada bagian ini, kita dapat memodifikasi pesan *commit*-an kita, 
+lakukan sesuai keinginan atau pada kali ini kita tidak mengeditnya,
+tetapi langsung menyimpannya tanpa mengubahnya dengan menekan tombol `Ctrl + X` kemudian `Y`
 
 Sekarang perubahan yang kita lakukan pada *commit*-an terakhir dan setelahnya akan berada di *commit* yang sama!
 
-Apabila kita ingin mengubah *commit*-an tanpa harus mengubah pesannya kita dapat menambahkan --no-edit seperti ini
+Apabila kita ingin mengubah *commit*-an tanpa harus mengubah pesannya kita dapat menambahkan `--no-edit` seperti ini:
 ```bash
 $ (features/update_city) git commit --amend --no-edit
 ```
 
-maka kita tidak akan ditampilkan perubahan pesan *commit*-an.
+Maka kita tidak akan ditampilkan perubahan pesan *commit*-an.
 
-apabila sudah selesai mengamandemen *commit*, kita dapat *push* dengan perintah berikut:
+Apabila sudah selesai meng-amandemen *commit*, kita dapat *push* dengan perintah berikut:
 ```bash
 $ (features/update_city) git push -f origin features/update_city
 ```
 
-Catatan: *push* dengan *-f* perlu kehati-hatian karena dia *memaksa* *push* ke *origin* atau bisa dikatakan *force*. Maka pastikan terlebih dahulu bahwa kita melakukan *push* ke *origin* yang benar
+Catatan: `git push` dengan `-f` perlu kehati-hatian karena dia *memaksa* *push* ke *origin* atau bisa dikatakan *force*. 
+Maka pastikan terlebih dahulu bahwa kita melakukan *push* ke *origin* yang benar
 
-Tambahan juga, Ingat lakukan hal ini hanya pada _branch_ kamu sendiri, JANGAN PERNAH menulis ulang riwayat *commit* *branch* *public* (mis. *master*). Ini akan mengacaukan kerja rekan tim apabila anda bekerja bersama tim (tidak sendiri).
+Tambahan juga, Ingat lakukan hal ini hanya pada _branch_ kamu sendiri, 
+Jangan menulis ulang riwayat *commit* *branch* *public* (mis. *master*, *main*). 
+Ini akan mengacaukan kerja rekan tim apabila anda bekerja bersama tim (tidak sendiri).
 
 
 Sekian dan Semoga bermanfaat. Sampai Jumpa.
