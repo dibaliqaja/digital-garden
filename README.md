@@ -16,15 +16,13 @@ This blog is hosted on [Vercel](https://vercel.com/), built with [Next.js](https
 
 A huge thanks to [Timothy Lin](https://twitter.com/timlrxx) for the minimal, lightweight, and super easy-to-customize blog starter.
 
-And thanks to [Tuan Anh (Leo) Huynh](https://github.com/hta218) for the blog inspiration.
+And thanks to [Tuan Anh (Leo) Huynh](https://github.com/hta218) for the blog template inspiration.
 
 ## Images
 
 All images in this blog are from [Unsplash](https://unsplash.com/), [imgur](https://imgur.com) and [GIPHY](https://giphy.com/) - Thanks for the free resources!
 
 ---
-
-Copyright (c) 2022 Muhammad Iqbal (Iqbal) - Alrights reserved.
 
 ## Quick Start Guide
 
@@ -153,13 +151,6 @@ Run `node ./scripts/compose.js` to bootstrap a new post.
 
 Follow the interactive prompt to generate a post with pre-filled front matter.
 
-## Deploy
+---
 
-**Vercel**  
-The easiest way to deploy the template is to use the [Vercel Platform](https://vercel.com) from the creators of Next.js. Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-**Netlify / GitHub Pages / Firebase etc.**  
-As the template uses `next/image` for image optimization, additional configurations have to be made to deploy on other popular static hosting websites like [Netlify](https://www.netlify.com/) or [GitHub Pages](https://pages.github.com/). An alternative image optimization provider such as Imgix, Cloudinary or Akamai has to be used. Alternatively, replace the `next/image` component with a standard `<img>` tag. See [`next/image` documentation](https://nextjs.org/docs/basic-features/image-optimization) for more details.
-
-The API routes used in the newsletter component cannot be used in a static site export. You will need to use a form API endpoint provider and substitute the route in the newsletter component accordingly. Other hosting platforms such as Netlify also offer alternative solutions - please refer to their docs for more information.
-
+Copyright (c) 2022 Muhammad Iqbal (Iqbal) - Alrights reserved.
