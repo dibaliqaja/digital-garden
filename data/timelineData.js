@@ -4,20 +4,22 @@ const timelineData = [
     role: 'Software Engineer (Web)',
     company: 'Kapanlagi Youniverse',
     companyURL: 'https://kly.id/',
-    companyBio: 'Trusted News Publisher in Indonesia',
+    companyBio: 'Trusted News Publisher in Indonesia.',
     works: [
       <>
         Maintain, Fixing Bug and Added New Features with Product and QA Team on{' '}
         <a target="_blank" rel="noopener noreferrer" href="https://liputan6.com/">
           Liputan6.com
-        </a>{' '}
+        </a>
+        ,{' '}
         <a target="_blank" rel="noopener noreferrer" href="https://fimela.com/">
           Fimela.com
-        </a>{' '}
+        </a>
+        ,{' '}
         <a target="_blank" rel="noopener noreferrer" href="https://bola.com/">
           Bola.com
         </a>{' '}
-        - It's the News Portal Media Group system owned by the company.
+        - It's the News Portal Media Group system owned by the company
       </>,
     ],
   },
@@ -29,7 +31,7 @@ const timelineData = [
     companyBio: 'Company that provides IT and Creative solution for start-ups and companies.',
     works: [
       <>
-        Built{' '}
+        Built and Fixing Bugs{' '}
         <a target="_blank" rel="noopener noreferrer" href="http://www.efield.id/">
           e-Field CMS
         </a>{' '}
@@ -42,7 +44,7 @@ const timelineData = [
         </a>{' '}
         (with Team)
       </>,
-      `Built, Fixing Bug and Added New Features on Web Company or eCommerce System for client needed`,
+      `Built, Fixing Bugs and Added New Features on Web Company or eCommerce System for client needed`,
     ],
   },
   {
@@ -53,7 +55,7 @@ const timelineData = [
     companyBio: 'Partner to support your IT need. Focus on Software and Business Analyst.',
     works: [
       `Maintain and optimize client site`,
-      `Built, Fixing Bug and Added New Features on Web Company System for client needed`,
+      `Built, Fixing Bugs and Added New Features on Web Company System for client needed`,
     ],
   },
   {

@@ -110,7 +110,7 @@ const Spotify = ({ data }) => {
         ) : (
           <p className="text-gray-200 font-medium">Not Playing</p>
         )}
-        <span className="mx-2 text-gray-300">{' – '}</span>
+        <span className="mx-2 text-gray-300">{' - '}</span>
         <p className="text-gray-300 max-w-max truncate">{data?.artist ?? 'Spotify'}</p>
       </div>
     </div>
@@ -137,7 +137,7 @@ const ProfileInfo = () => (
         />
       </svg>
 
-      <p className="px-2 text-[15px]">Software Engineer</p>
+      <p className="px-2 text-[15px]">Software Engineer 👨‍💻</p>
     </div>
 
     <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
