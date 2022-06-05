@@ -9,7 +9,7 @@ const siteMetadata = {
   google: 'MNPR1j6Mzfbp04i4esCkdCCQUEbsQg9XZIwtvRDXTxA',
   snippets: 'Reuseable code snippets collected by Iqbal',
   language: 'en-us',
-  siteUrl: 'https://www.dibaliqaja.my.id',
+  siteUrl: 'https://www.dibaliqaja.vercel.app',
   siteRepo: 'https://github.com/dibaliqaja/dilo',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/logo.png',
