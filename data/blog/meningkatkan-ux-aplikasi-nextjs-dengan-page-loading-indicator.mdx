@@ -1,0 +1,77 @@
+---
+title: 'Meningkatkan UX Aplikasi Next.js dengan Page Loading Indicator'
+date: '2022-06-10'
+tags: ['nprogress', 'next.js', 'loading', 'ux', 'tutorial', 'improve']
+draft: true
+summary: 'Tanpa indikator pemuatan, halaman terlihat berhenti saat halaman mengambil konten melalui JavaScript. 
+Ini bisa sangat membingungkan bagi pengguna dan berdampak negatif pada pengalaman pengguna situs.'
+images: ['/static/images/quit.jpg']
+authors: ['default']
+---
+
+import Twemoji from './Twemoji.js'
+import UnsplashLicense from './UnsplashLicense.js'
+
+### Pengantar
+[Next.js](https://nextjs.org/) merupakan salah satu standar kerangka kerja untuk membangun sebuah aplikasi React.
+
+Navigasi _Client-Side_ merupakan tipikal untuk aplikasi SPA (_Single Page Application_) dan memiliki banyak keuntungan. 
+Next.js menyediakan _tools_ yang mudah digunakan seperti komponen `Link` dan `Router` untuk menggunakan navigasi dari sisi klien. 
+Tetapi dengan semua kelebihannya, ia memiliki satu kelemahan UX (_User Experience_) untuk pengguna.
+
+Salah satunya yaitu, _framework_ tersebut tidak membuat indikasi pemuatan laman, 
+yang biasanya terjadi dalam kasus situs multi-halaman. 
+Tanpa indikator pemuatan (_Load Browser_), halaman terlihat berhenti saat halaman mengambil konten melalui JavaScript. 
+Ini bisa sangat membingungkan bagi pengguna dan berdampak negatif pada pengalaman pengguna situs.
+
+### Mari Kita Mulai
+1. Install paket `nprogress`
+2. Bind `nprogress` ke navigasi `events` pada Router Next.js
+
+Cukup dengan dua langkah tersebut kita dapat menambahkan _loading indicator_ halaman pada aplikasi Next.js kita.
+
+#### 1. Install paket `nprogress`
+`nprogress` merupakan sebuah paket yang menyediakan animasi _progress bar_. Install dengan perintah berikut:
+
+```bash
+npm i nprogress
+```
+
+atau
+
+```bash
+yarn i nprogress
+```
+
+
+#### 2. Bind untuk Navigasi Events
+Kita perlu _trigger_ animasi `nprogress` saat navigasi sisi klien mulai dan berhenti saat navigasi selesai. 
+Kita bisa menggunakan event `Router` bawaan di Next.js untuk _binding_. 
+
+Dalam kasus ini, kita _bind event_ tersebut dalam komponen `App` khusus untuk menjaga kode tetap teratur.
+
+```js:_app.js
+import Router from 'next/router';
+import NProgress from 'nprogress'; // nprogress module
+import 'nprogress/nprogress.css'; // styles of nprogress
+
+// Binding events
+Router.events.on('routeChangeStart', () => NProgress.start());
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
+
+function MyApp({ Component, pageProps }) {
+    return <Component {...pageProps} />
+}
+
+export default MyApp;
+```
+
+Kode di atas cukup jelas. 
+Pastikan _bind_ `event handler` di luar komponen untuk menghindari _binding_ beberapa _handler_. 
+Untuk styling CSS `nprogress` berfungsi di Next.js versi `9.3` terbaru. 
+
+Jika kamu menggunakan versi yang lebih lama, kamu perlu menginstall plugin untuk memuat CSS. 
+Saya dapat menyarankan kamu dengan menggunakan [@webdeb/next-styles](https://www.npmjs.com/package/@webdeb/next-styles)
+
+Sekian dan Semoga bermanfaat. Sampai Jumpa.
