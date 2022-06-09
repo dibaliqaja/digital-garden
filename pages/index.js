@@ -49,7 +49,7 @@ export default function Home({ posts }) {
               <p className="mt-4 mb-8">
                 I started my coding journey in late 2017 with C/C++/Java in college
                 <br />
-                I had my first job as a PHP coding mentor in 2019 at a vocational school
+                I had my first job as a PHP coding mentor in 2019 at vocational high school
                 <br />
                 I'm in love with the Web Ecosystem and Web Development
                 <br />

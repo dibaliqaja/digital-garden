@@ -60,13 +60,16 @@ const timelineData = [
   },
   {
     time: 'Sep 2017 - Aug 2021',
-    role: 'Study Informatics Engineering',
-    company: 'PGRI Ronggolawe University',
-    companyURL: 'https://www.unirow.ac.id/',
-    works: [
-      `Bachelor Degree (S-1) in Computer Science    `,
-      `Degree Grade: With Compliments      `,
-    ],
+    role: (
+      <>
+        Study Informatics Engineering at{' '}
+        <a target="_blank" rel="noopener noreferrer" href="https://www.unirow.ac.id">
+          PGRI Ronggolawe University
+        </a>{' '}
+        <br /> - Bachelor Degree (S-1) in Computer Science
+        <br /> - Degree grade: With Compliments
+      </>
+    ),
   },
   {
     time: 'Mar 1999',
@@ -79,8 +82,8 @@ const timelineData = [
           href="https://id.wikipedia.org/wiki/Kabupaten_Tuban/"
         >
           Tuban District
-        </a>{' '}
-        East Java
+        </a>
+        , East Java
       </>
     ),
   },
