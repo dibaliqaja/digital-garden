@@ -10,7 +10,7 @@ const siteMetadata = {
   snippets: 'Reuseable code snippets collected by Iqbal',
   language: 'en-us',
   siteUrl: 'https://www.dibaliqaja.vercel.app',
-  siteRepo: 'https://github.com/dibaliqaja/dilo',
+  siteRepo: 'https://github.com/dibaliqaja/digital-garden',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/logo.png',
   socialBanner: '/static/images/logo.png',
