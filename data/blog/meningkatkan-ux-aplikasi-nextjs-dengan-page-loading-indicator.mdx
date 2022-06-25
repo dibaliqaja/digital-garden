@@ -2,7 +2,7 @@
 title: 'Meningkatkan UX Aplikasi Next.js dengan Page Loading Indicator'
 date: '2022-06-10'
 tags: ['nprogress', 'next.js', 'loading', 'ux', 'tutorial', 'improve']
-draft: true
+draft: false
 summary: 'Tanpa indikator pemuatan, halaman terlihat berhenti saat halaman mengambil konten melalui JavaScript. 
 Ini bisa sangat membingungkan bagi pengguna dan berdampak negatif pada pengalaman pengguna situs.'
 images: ['/static/images/quit.jpg']
@@ -67,7 +67,6 @@ function MyApp({ Component, pageProps }) {
 export default MyApp;
 ```
 
-Kode di atas cukup jelas. 
 Pastikan _bind_ `event handler` di luar komponen untuk menghindari _binding_ beberapa _handler_. 
 Untuk styling CSS `nprogress` berfungsi di Next.js versi `9.3` terbaru. 
 
