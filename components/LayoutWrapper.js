@@ -20,9 +20,9 @@ const LayoutWrapper = ({ children }) => {
               <div className="flex items-center justify-between">
                 <div className="mr-3 flex justify-center items-center">
                   <NextImage
-                    src="/static/images/logoo.png"
-                    width={45}
-                    height={45}
+                    src="/static/images/logo.png"
+                    width="45px"
+                    height="45px"
                     className="rounded-full"
                   />
                 </div>
