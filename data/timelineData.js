@@ -1,13 +1,13 @@
 const timelineData = [
   {
-    time: 'Feb 2022 - Now',
+    time: 'Feb 2022 - Present',
     role: 'Software Engineer (Web)',
     company: 'Kapanlagi Youniverse',
     companyURL: 'https://kly.id/',
     companyBio: 'Trusted News Publisher in Indonesia.',
     works: [
       <>
-        Maintain, Fixing Bug and Added New Features with Product and QA Team on{' '}
+        Added New Features, Fixing Bugs and Optimize sites with Product and QA Team on{' '}
         <a target="_blank" rel="noopener noreferrer" href="https://liputan6.com/">
           Liputan6.com
         </a>
@@ -18,6 +18,10 @@ const timelineData = [
         ,{' '}
         <a target="_blank" rel="noopener noreferrer" href="https://bola.com/">
           Bola.com
+        </a>
+        ,{' '}
+        <a target="_blank" rel="noopener noreferrer" href="https://otosia.com/">
+          Otosia.com
         </a>{' '}
         - It's the News Portal Media Group system owned by the company
       </>,
@@ -31,16 +35,17 @@ const timelineData = [
     companyBio: 'Company that provides IT and Creative solution for start-ups and companies.',
     works: [
       <>
-        Built and Fixing Bugs{' '}
+        Added New Features and Fixing Bugs on{' '}
         <a target="_blank" rel="noopener noreferrer" href="http://www.efield.id/">
           e-Field CMS
-        </a>{' '}
-        (with Team)
-      </>,
-      <>
-        Maintain and Fixing Bugs{' '}
+        </a>
+        ,{' '}
         <a target="_blank" rel="noopener noreferrer" href="https://www.cocrea.co.id/">
           Cocrea CMS
+        </a>
+        ,{' '}
+        <a target="_blank" rel="noopener noreferrer" href="http://www.belifire.com/">
+          Belifire
         </a>{' '}
         (with Team)
       </>,
@@ -54,7 +59,7 @@ const timelineData = [
     companyURL: 'https://www.linkedin.com/company/pt-global-informatika-indonesia',
     companyBio: 'Partner to support your IT need. Focus on Software and Business Analyst.',
     works: [
-      `Maintain and optimize client site`,
+      `Maintain and optimize client sites`,
       `Built, Fixing Bugs and Added New Features on Web Company System for client needed`,
     ],
   },
@@ -62,7 +67,7 @@ const timelineData = [
     time: 'Sep 2017 - Aug 2021',
     role: (
       <>
-        Study Informatics Engineering at{' '}
+        Studied at{' '}
         <a target="_blank" rel="noopener noreferrer" href="https://www.unirow.ac.id">
           PGRI Ronggolawe University
         </a>{' '}
@@ -83,7 +88,7 @@ const timelineData = [
         >
           Tuban District
         </a>
-        , East Java
+        , East Java.
       </>
     ),
   },
