@@ -1,0 +1,53 @@
+---
+title: Cara Membuat Shortcut Aplikasi XAMPP Server Desktop pada Ubuntu/Linux
+date: '2022-06-09'
+tags: ['xampp','ubuntu','linux','beginners','tutorial']
+draft: true
+summary: Adakalanya, kita mencoba menginstal sebuah aplikasi di sistem Ubuntu/Linux akan tetapi terkadang aplikasi tersebut tidak tampil pada pintasan (shortcut) Desktop Menu kita. Dalam kasus ini, seperti aplikasi XAMPP yang sudah kita install tapi tidak tampil pada Desktop Menu.
+images: ['/static/images/quit.jpg']
+authors: ['default']
+---
+
+import Twemoji from './Twemoji.js'
+import UnsplashLicense from './UnsplashLicense.js'
+
+## Pengantar
+Adakalanya, kita mencoba menginstal sebuah aplikasi di sistem Ubuntu/Linux akan tetapi terkadang aplikasi tersebut tidak tampil pada pintasan (_shortcut_) Desktop Menu kita. Dalam kasus ini, seperti aplikasi XAMPP yang sudah kita install tapi tidak tampil pada Desktop Menu. Kita bisa menambahkan pintasan aplikasi tersebut dengan beberapa langkah.
+
+## Prasyarat
+1. Sebuah sistem Ubuntu yang sudah berjalan atau sistem Linux turunannya.
+2. Pada tahapan kali ini saya tidak akan menjelaskan tentang cara instalasi XAMPP. Pastikan sistem kita sudah terinstall XAMPP sebelumnya.
+
+## Mari Kita Mulai
+1. Yang pertama buka terminal kita, lalu pindah ke direktori `applications`  dengan menggunakan perintah seperti berikut:
+```bash
+cd /usr/share/applications
+```
+
+2. Kemudian, buat file baru dengan ektensi `*.desktop` dengan perintah seperti berikut:
+```bash
+sudo touch xampp.desktop
+```
+
+3. Sekarang, buka file yang baru kita buat dengan hak akses super admin sebagai berikut:
+```bash
+sudo gedit xampp.desktop
+```
+
+4. Setelah file terbuka, tambahkan kode seperti berikut:
+```bash:/usr/share/applications/xampp.desktop
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Encoding=UTF-8
+Name=XAMPP Control Panel
+Comment=Start and Stop XAMPP
+Exec=sh -c "pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY sudo /opt/lampp/manager-linux-x64.run" 
+Icon=/opt/lampp/htdocs/favicon.ico
+Categories=Application
+Type=Application
+Terminal=false
+```
+
+5. Simpan file yang sudah kita edit. Sekarang kita mempunyai _shortcut_ aplikasi XAMPP pada menu kita. 
+
+Sekian dan Semoga bermanfaat. Sampai Jumpa.
