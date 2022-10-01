@@ -2,8 +2,14 @@ import siteMetadata from '@/data/siteMetadata'
 import projectsData from '@/data/projectsData'
 import ProjectCard from '@/components/ProjectCard'
 import { PageSeo } from '@/components/SEO'
+import useTranslation from 'next-translate/useTranslation'
 
-export default function Projects() {
+export async function getStaticProps({ locale, locales }) {
+  return { props: { locale, availableLocales: locales } }
+}
+
+export default function Projects({ locale, availableLocales }) {
+  const { t } = useTranslation()
   const workProjects = projectsData.filter(({ type }) => type === 'work')
   const sideProjects = projectsData.filter(({ type }) => type === 'self')
 
@@ -16,7 +22,7 @@ export default function Projects() {
             Projects
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            My open source side projects that I built
+            {t('common:projects_desc')}
           </p>
         </div>
         {/* <div className="container py-12">
@@ -41,7 +47,7 @@ export default function Projects() {
             My Projects
           </h3> */}
           <div className="flex flex-wrap -m-4">
-            {sideProjects.map((project) => (
+            {sideProjects[locale]?.map((project) => (
               <ProjectCard
                 key={project.title}
                 title={project.title}

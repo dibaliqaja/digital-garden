@@ -3,10 +3,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
 import fetcher from '@/lib/fetcher'
 import Twemoji from './Twemoji'
-import Link from 'next/link'
+import useTranslation from 'next-translate/useTranslation'
 
 const ProfileCard = () => {
   const { data } = useSWR('/api/spotify', fetcher)
+  const { t } = useTranslation()
 
   const ref = useRef(null)
   const [style, setStyle] = useState({})
@@ -68,7 +69,7 @@ const ProfileCard = () => {
             objectPosition="50% 16%"
           />
           <Spotify data={data} />
-          <ProfileInfo />
+          <ProfileInfo t={t} />
           <span className="h-1.5 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
         </div>
       </div>
@@ -117,7 +118,7 @@ const Spotify = ({ data }) => {
   )
 }
 
-const ProfileInfo = () => (
+const ProfileInfo = ({ t }) => (
   <div className="hidden xl:block xl:px-6 py-4">
     <h1 className="text-xl font-semibold text-gray-800 dark:text-white">Muhammad Iqbal</h1>
     <p className="py-2 text-gray-700 dark:text-gray-400">Learner | Builder</p>
@@ -163,7 +164,7 @@ const ProfileInfo = () => (
       </svg>
 
       <p className="px-2 text-[15px]">
-        East Java - Indonesia
+        {t('common:province')} - Indonesia
         <span className="align-middle flag-vn ml-1">
           <Twemoji emoji="flag-indonesia" />
         </span>

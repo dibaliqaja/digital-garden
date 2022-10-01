@@ -1,6 +1,9 @@
 import SnippetCard from '@/components/SnippetCard'
+import useTranslation from 'next-translate/useTranslation'
 
-export default function SnippetsLayout({ title, snippets }) {
+export default function SnippetsLayout({ title, snippets, availableLocales }) {
+  const { t } = useTranslation()
+
   return (
     <>
       <div className="divide-y">
@@ -9,7 +12,7 @@ export default function SnippetsLayout({ title, snippets }) {
             {title}
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            Reuseable code snippets collected by me
+            {t('common:snippets_desc')}
           </p>
         </div>
         <div className="container py-12">

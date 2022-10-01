@@ -7,18 +7,23 @@ import TypedBios from '@/components/TypedBios'
 import siteMetadata from '@/data/siteMetadata'
 import { getAllFilesFrontMatter } from '@/lib/mdx'
 import formatDate from '@/lib/utils/formatDate'
+import useTranslation from 'next-translate/useTranslation'
 
 const MAX_DISPLAY = 5
 
-export async function getStaticProps() {
-  const posts = await getAllFilesFrontMatter('blog')
+export async function getStaticProps({ locale, defaultLocale, locales }) {
+  const otherLocale = locale !== defaultLocale ? locale : ''
+  const posts = await getAllFilesFrontMatter('blog', otherLocale)
 
-  return { props: { posts } }
+  return { props: { posts, locale, availableLocales: locales } }
 }
 
-export default function Home({ posts }) {
+export default function Home({ posts, locale, availableLocales }) {
   const headingColorClass =
     'bg-gradient-to-r from-yellow-600 to-red-600 dark:bg-gradient-to-l dark:from-emerald-500 dark:to-lime-600'
+
+  const { t } = useTranslation()
+
   return (
     <>
       <PageSeo
@@ -31,46 +36,46 @@ export default function Home({ posts }) {
         <div className="my-4 pt-6 pb-8 space-y-2 md:space-y-5 xl:grid xl:grid-cols-3">
           <div className="xl:col-span-2 pr-8">
             <p
-              className={`mb-8 text-4xl leading-[60px] font-extrabold tracking-tight text-transparent bg-clip-text ${headingColorClass} md:text-7xl md:leading-[86px]`}
+              className={`mb-8 text-4xl leading-[60px] font-extrabold tracking-tight text-transparent bg-clip-text ${headingColorClass} md:text-6xl md:leading-[86px]`}
             >
-              Howdy, fellow! <i className="twa twa-waving-hand"></i>
+              {t('common:fellow')} <i className="twa twa-waving-hand"></i>
             </p>
 
             <div className="text-lg leading-8 text-gray-600 dark:text-gray-400">
               <h1 className="text-neutral-900 dark:text-neutral-200">
-                I'm <span className="font-medium">Muhammad Iqbal</span> - a{' '}
-                <span className="font-medium">Software Engineer</span> from Indonesia{' '}
-                <span className="font-medium hidden">East Java, ID</span>
+                {t('common:im')} <span className="font-medium">Muhammad Iqbal</span> -{' '}
+                <span className="font-medium">Software Engineer</span> {t('common:from')} Indonesia{' '}
+                <span className="font-medium hidden">{t('common:province')}, ID</span>
                 <span className="align-middle flag-vn">
                   <Twemoji emoji="flag-indonesia" />
                 </span>
               </h1>
-              <TypedBios />
+              <TypedBios t={t} />
               <p className="mt-4 mb-8">
-                I started my coding journey in late 2017 with C/C++/Java in college
+                {t('common:bio1')}
                 <br />
-                I had my first job as a PHP coding mentor in 2019 at vocational high school
+                {t('common:bio2')}
                 <br />
-                I'm in love with the Web Ecosystem and Web Development
+                {t('common:bio3')}
                 <br />
-                I'm writing this blog to note down and share what I've learned as a SE
+                {t('common:bio4')}
               </p>
               <div className="flex flex-col">
                 <Link href="/blog" className="hover:underline">
-                  <Twemoji emoji="memo" /> My writings
+                  <Twemoji emoji="memo" /> {t('common:writings')}
                 </Link>
                 <Link href="/snippets" className="hover:underline">
-                  <Twemoji emoji="dna" /> Useful snippets collected by me
+                  <Twemoji emoji="dna" /> {t('common:snippets')}
                 </Link>
                 <Link href="/about" className="hover:underline">
-                  <Twemoji emoji="face-with-monocle" /> More about me and myself
+                  <Twemoji emoji="face-with-monocle" /> {t('common:about')}
                 </Link>
                 <Link href="/resume" className="hover:underline">
-                  <Twemoji emoji="briefcase" /> My resume
+                  <Twemoji emoji="briefcase" /> {t('common:resume')}
                 </Link>
               </div>
               <p className="my-8">
-                Happy reading <Twemoji emoji="clinking-beer-mugs" />
+                {t('common:reading')} <Twemoji emoji="clinking-beer-mugs" />
               </p>
             </div>
           </div>
@@ -80,8 +85,8 @@ export default function Home({ posts }) {
         </div>
       </div>
       <div className="border-t border-gray-200 dark:border-gray-700">
-        <ul className="pt-3 divide-y divide-gray-200 dark:divide-gray-700">
-          {!posts.length && 'No posts found.'}
+        <ul className="pt-2 divide-y divide-gray-200 dark:divide-gray-700">
+          {!posts.length && ''}
           {posts.slice(0, MAX_DISPLAY).map((frontMatter) => {
             const { slug, date, title, summary, tags } = frontMatter
             return (

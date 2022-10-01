@@ -1,0 +1,16 @@
+{
+  "locales": ["en", "id"],
+  "defaultLocale": "en",
+  "pages": {
+    "*": ["common"],
+    "/projects": ["projects"],
+    "/snippets": ["snippets"],
+    "/about": ["about"]
+  },
+  "components": {
+    "*": ["common"]
+  },
+  "layouts": {
+    "*": ["common"]
+  }
+}

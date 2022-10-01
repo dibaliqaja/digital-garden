@@ -1,8 +1,11 @@
 import DevIcon from './dev-icons'
 import Link from './Link'
+import useTranslation from 'next-translate/useTranslation'
 
 const SnippetCard = ({ snippet }) => {
   const { type, title, summary, slug } = snippet
+  const { t } = useTranslation()
+
   return (
     <Link href={`/snippets/${slug}`}>
       <div className="flex rounded border dark:hover:border-gray-400 dark:border-gray-600 border-gray-300 hover:border-gray-500 cursor-pointer mb-4 lg:mb-0">

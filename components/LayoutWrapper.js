@@ -3,12 +3,29 @@ import Link from './Link'
 import Footer from './Footer'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
+import Twemoji from '@/components/Twemoji.js'
 import NextImage from 'next/image'
 import { useState } from 'react'
+
+import useTranslation from 'next-translate/useTranslation'
+import { useRouter } from 'next/router'
 
 const LayoutWrapper = ({ children }) => {
   const [navShow, setNavShow] = useState(false)
   const onToggleNav = () => setNavShow((status) => !status)
+
+  const { t } = useTranslation()
+  const router = useRouter()
+  const { locale, locales, defaultLocale } = router
+  // const lang = [
+  //   {option: '🇮🇩': value: 'id'},
+  //   {option: '🇬🇧': value: 'en'}
+  // ];
+
+  const changeLanguage = (e) => {
+    const locale = e.target.value
+    router.push(router.asPath, router.asPath, { locale })
+  }
 
   return (
     <>
@@ -41,6 +58,18 @@ const LayoutWrapper = ({ children }) => {
                 </Link>
               ))}
             </div>
+            <select
+              onChange={changeLanguage}
+              defaultValue={locale}
+              style={{ textAlignLast: 'center' }}
+              className="text-gray-900 dark:text-gray-100 text-shadow-sm text-sm bg-transparent tracking-wide"
+            >
+              {locales.map((e) => (
+                <option value={e} key={e} className="font-medium text-black">
+                  {e}
+                </option>
+              ))}
+            </select>
             <ThemeSwitch />
             <button
               className="w-8 h-8 ml-2 mr-1 rounded sm:hidden"
