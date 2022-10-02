@@ -1,0 +1,159 @@
+---
+title: Memahami Penggunaan Class Interface Pada PHP
+date: '2022-10-02'
+tags: ['php','interface','oop','design']
+draft: true
+summary: Kapan dan Bagaimana kita mengimplementasikan Interface Class
+images: ['/static/images/quit.jpg']
+authors: ['default']
+---
+
+
+### Interface Class
+
+Kita telah tahu, bahwa sebuah __interface__ didefinisikan dengan kata kunci `interface`
+dan semua _method_ di dalamnya yang bersifat abstrak. Semua _method/function_ yang dideklarasikan
+di dalam _interface_ harus bersifat _public_. Contoh dari _interface_
+
+```php:Payment.php
+<?php
+
+interface Payment
+{
+    public function send();
+}
+```
+
+Di dalam sebuah _interface_, _body method_ tidak didefinisikan secara langsung, yang didefinisikan secara langsung
+yaitu hanya nama dan parameternya. Jika kita tidak menggunakan _interface_, apa yang akan jadi masalah kita?
+Mengapa kita perlu implementasi sebuah _interface_?
+
+Lihat kode yang ada dibawah ini
+
+```php showLineNumbers
+<?php
+
+class payWithBankA 
+{
+    public function send($pay)
+    {
+        var_dump('Melakukan pembayaran dengan metode Bank A sebesar : ' . $pay);   
+    }
+}
+
+class payWithBankB 
+{
+    public function send($pay)
+    {
+        var_dump('Melakukan pembayaran dengan metode Bank B sebesar : ' . $pay);   
+    }
+}
+
+class OrderController 
+{ 
+    protected $payment;
+    
+    public function __construct(payWithBankA $payment)
+    {
+        $this->payment = $payment;
+    }
+    
+    public function store()
+    { 
+        $pay = 10000;
+        $this->payment->send($pay);
+    }
+}
+
+$controller = new OrderController(new payWithBankA);
+$controller->store();
+```
+
+Dalam contoh di atas, kita tidak menggunakan _interface_. 
+Kita menulis _method send_ di dalam sebuah _class payWithBankA_.
+
+Tetapi, jika saya ingin menulis _method send_ menggunakan _payWithBankB_, 
+kita harus mengubah juga referensi _class_ dengan _hard-code_ pada kode di atas pada baris nomor 23.
+
+Kode tersebut adalah
+
+```php
+public function __construct(payWithBankA $payment)
+```
+
+Dan apabila kita menggantinya, akan menjadi sepert ini
+
+```php
+public function __construct(payWithBankB $payment)
+```
+
+Dalam sebuah _project_ yang besar, 
+jika kita memiliki banyak _class_ dan kita perlu mengubahnya, kita harus mengubah semua _class_ secara manual.
+
+Dan disini, dengan menggunakan _interface_. Masalah kita akan terpecahkan. Dan kita tidak perlu mengubah satu satu secara manual.
+
+Sekarang, lihat kode yang berikut dan coba kita pahami apa yang terjadi ketika kita menggunakan _interface_.
+
+```php
+<?php
+
+interface Payment 
+{
+    public function send($pay);
+}
+
+class payWithBankA implements Payment 
+{
+    public function send($pay)
+    {
+        var_dump('Melakukan pembayaran dengan metode Bank A sebesar : ' . $pay);  
+    }
+}
+
+class payWithBankB implements Payment 
+{
+    public function send($pay) 
+    {
+        var_dump('Melakukan pembayaran dengan metode Bank B sebesar : ' . $pay);  
+    }
+}
+
+class OrderController 
+{ 
+    protected $payment;
+    
+    public function __construct(Payment $payment)
+    {
+        $this->payment = $payment;
+    }
+    
+    public function store()
+    { 
+        $pay = 10000;
+        $this->payment->send($pay);
+    }
+}
+
+$controller = new OrderController(new payWithBankA);
+$controller->store();
+
+$controller = new OrderController(new payWithBankB);
+$controller->store();
+```
+
+Sekarang, jika kita mengubah dari `payWithBankA` ke `payWithBankB`, kita tidak perlu mengubah metode konstruktor secara manual. 
+Dalam metode konstruktor, kita telah menyuntikkan ( _inject_ ) sebuah _interface_, dan bukan sebuah _class_.
+
+Pada contoh di atas, kita _passing_ parameter _pay_ menggunakan `payWithBankA` dan sekarang kita 
+ingin menulis _passing_ parameter _pay_ menggunakan `payWithBankb`. Dan kita bisa menulisnya seperti ini tanpa perlu mengubah
+__constructor__ seperti yang sebelumnya.
+
+```php
+$controller = new OrderController(new payWithBankB);
+$controller->store();
+```
+
+Kita akan mendapatkan hasil tanpa mengubah _class_ yang lain karena _interface_ menangani masalah pada tempat tersebut. 
+
+
+Sekian dan Semoga bermanfaat. Sampai Jumpa.

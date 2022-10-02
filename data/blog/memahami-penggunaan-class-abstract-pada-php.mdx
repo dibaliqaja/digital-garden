@@ -1,0 +1,189 @@
+---
+title: Memahami Penggunaan Class Abstract Pada PHP
+date: '2022-10-02'
+tags: ['php','abstract','oop','design']
+draft: true
+summary: Kapan dan Bagaimana kita mengimplementasikan Abstract Class
+images: ['/static/images/quit.jpg']
+authors: ['default']
+---
+
+
+### Abstract Class
+
+_Abstract Class_ terkadang hanya sebagian diimplementasikan pada penggunaanya.
+Setidaknya satu _method_ abstrak, 
+yang merupakan _method_ tanpa kode aktual di dalamnya — hanya sebuah nama dan parameternya, 
+dan telah ditandai sebagai __"abstract"__.
+
+_Method_ abstrak hanyalah sebuah definisi fungsi yang berfungsi untuk memberi tahu kita bahwa metode tersebut 
+harus diimplementasikan dalam kelas turunan ( _child class_ ). Contoh kode
+
+```php:Brew.php
+<?php
+
+abstract class Brew
+{
+    abstract protected function make();
+    
+    protected function addWater() 
+    {
+        return $this->make();
+    }
+
+    protected function addSugar() 
+    {
+        return $this->make();
+    }
+}
+```
+
+Dan pertanyaanya sekarang adalah, Bagaimana kita tahun bahwa suatu _method/function_ yang telah kita buat itu
+akan dibutuhkan dan harus diimplementasikan?
+
+Lihat kode yang ada dibawah ini yaitu kita coba membuat _class_ bernama `Tea`, yang di dalamnya
+terdapat beberapa _method_ untuk membuat sebuah teh.
+
+```php:Tea.php
+<?php
+
+class Tea
+{
+    public function addTea()
+    {
+        var_dump("Dip a tea");
+        return $this;
+    }
+
+    public function addWater()
+    {
+        var_dump("Pour a water");
+        return $this;
+    }
+
+    public function addSugar()
+    {
+        var_dump("Add proper amount of sugar");
+        return $this;
+    }
+
+    public function make()
+    {
+        return $this
+                ->addTea()
+                ->addWater()
+                ->addSugar();   
+    }
+}
+
+$tea = new Tea();
+$tea->make();
+```
+
+Sekarang kita coba membuat _class_ baru juga bernama `Coffee`
+
+```php:Coffee.php
+<?php
+
+class Coffee
+{
+    public function addCoffee()
+    {
+        var_dump("Add amount of coffee");
+        return $this;
+    }
+
+    public function addWater()
+    {
+        var_dump("Pour a water");
+        return $this;
+    }
+
+    public function addSugar()
+    {
+        var_dump("Add proper amount of sugar");
+        return $this;
+    }
+
+    public function make()
+    {
+        return $this
+            ->addCoffee()
+            ->addWater()
+            ->addSugar();   
+    }
+}
+
+$coffe = new Coffee();
+$coffe->make();
+```
+
+Oke, kita coba perhatikan di dalam dua _class_ di atas, yaitu `Tea` dan `Coffee`.
+Terdapat beberapa _method_ yang sama seperti `addWater` dan `addSugar`.
+
+Dalam kasus ini, kita bisa mengimplementasikan sebuah _abstract class_ agar tidak terjadi
+duplikasi kode yang sudah kita tulis, dan pastinya kode akan terlihat lebih bersih ( _clean_ ).
+Kita bisa melakukannya seperti berikut
+
+```php:BrewingDrink.php
+<?php
+
+abstract class Brew
+{
+    protected abstract function seasoning();
+
+    public function make()
+    {
+        return $this
+            ->seasoning()
+            ->addWater()
+            ->addSugar();
+    }
+
+    public function addWater()
+    {
+        var_dump("Pour a water");
+        return $this;
+    }
+
+    public function addSugar()
+    {
+        var_dump("Add proper amount of sugar");
+        return $this;
+    }
+}
+
+class Tea extends Brew
+{
+    public function seasoning()
+    {
+        var_dump("Dip a tea");
+        return $this;
+    }
+}
+
+$tea = new Tea();
+$tea->make();
+
+class Coffee extends Brew
+{
+    public function seasoning()
+    {
+        var_dump("Add amount of coffee");
+        return $this;
+    }
+}
+
+$coffee = new Coffee();
+$coffee->make();
+```
+
+Kita membuat _abstract class_ dan menamainya `Brew`
+Di dalam _abstract class_ ini, kita mendeklarasikan beberapa _method_ yang sama digunakan pada _class_ `Tea` dan `Coffee`
+kemudian kita membuat sebuah _abstract method_ dengan nama `seasoning`.
+
+Sekarang, jika kita membuat _class_ `Tea` __extend__ _class_ `Brew`, kita akan mendapatkan tiga _method_ yang ditentukan
+dan kita harus mendefinisikan _method_ `seasoning`. 
+Begitu juga dengan _class_ `Coffee`, dapat dilakukan dengan cara yang sama.
+
+Sekian dan Semoga bermanfaat. Sampai Jumpa.
