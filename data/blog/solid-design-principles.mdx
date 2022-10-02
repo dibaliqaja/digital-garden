@@ -11,7 +11,7 @@ authors: ['default']
 
 ### Pengantar
 
-Menjadi seorang _Software Engineer_ terkadang kita sering:
+Menjadi seorang _Software Engineer_ terkadang kita masih sering :
 - Membaca berulang-ulang beberapa kode untuk sampai ke bagian yang ingin kita ubah.
 - Sulit memahami dengan apa yang diharapkan oleh __method/function__ yang sudah ada.
 - Menghabiskan banyak waktu hanya untuk memperbaiki sebuah _bug_ kecil ( _minor_ ).
@@ -21,7 +21,7 @@ Nah, dari keresahan-keresahan tersebut.
 Ada sebuah prinsip, agar hidup kita sebagai seorang _Software Engineer_ dapat lebih mudah/terbantu.
 Yap, prinsip tersebut adalah __SOLID Design Principles__.
 
-Kita akan belajar dan mencoba memahami poin-poin berikut:
+Kita akan belajar dan mencoba memahami poin-poin berikut :
 
 - Apa itu __SOLID Design Principles__?
 - Bagaimana prinsip tersebut dapat membuat hidup kita (sebagai seorang _Software Engineer_) lebih mudah?
@@ -29,8 +29,9 @@ Kita akan belajar dan mencoba memahami poin-poin berikut:
 - Apa tujuan dari masing masing prinsip tersebut?
 - Dan bagaimana jika kita tidak menggunakan prinsip __SOLID__ tersebut dalam _project_ kita?
 
-Secara umum, dengan adanya prinsip __SOLID__ paling tidak ada beberapa poin penting yang bisa kita ambil manfaatnya, yaitu:
-- Untuk membuat kode kita lebih mudah dipelihara (_maintenance_).
+Secara umum, dengan adanya prinsip __SOLID__ paling tidak ada beberapa poin penting yang bisa kita ambil manfaatnya, yaitu :
+
+- Untuk membuat kode kita lebih mudah dipelihara ( _maintenance_ ).
 - Untuk memudahkan perluasan sistem dengan fungsionalitas baru dengan cepat tanpa merusak yang sudah ada.
 - Untuk membuat kode kita lebih mudah dibaca dan dipahami, sehingga kita menghabiskan lebih sedikit waktu 
   untuk mencari tahu apa yang sebenarnya perlu dilakukan dan kita bisa lebih banyak waktu untuk mengembangkan sebuah solusi.
@@ -49,7 +50,8 @@ Dengan mengimplementasikan prinsip ini, kita dapat terbantu dalam menghindari _b
 mudah dalam melakukan _refactoring_ serta sistem kita dapat dikembangkan secara [__Agile__](https://en.wikipedia.org/wiki/Agile_software_development)
 atau __Adaptive__ (mudah dalam beradaptasi mengikuti perkembangan).
 
-__SOLID__ sendiri merupakan sebuah akronim dari lima prinsip, yang terdiri dari:
+__SOLID__ sendiri merupakan sebuah akronim dari lima prinsip, yang terdiri dari :
+
 - __S__	- __Single Responsibility Principle__
 - __O__	- __Open Closed Principle__
 - __L__	- __Liskov Substitution Principle__
@@ -77,7 +79,7 @@ Atau pada kasus yang lain
 kita contohkan pada Laravel, kita bisa deklarasikan validasi __request__ di dalam __controller__ secara langsung. 
 Seperti berikut
 
-```php:app\Http\Controllers\UserController.php showLineNumbers
+```php:app\Http\Controllers\UserController.php
 <?php
 
 namespace App\Http\Controllers;
@@ -174,9 +176,9 @@ class UserRepository
     public function create($userData)
     {
         $user			= new User();
-		$user->name 	= $request->name;
-        $user->email 	= $request->email;
-        $user->password = bcrypt($request->password);
+		$user->name 	= $userData->name;
+        $user->email 	= $userData->email;
+        $user->password = bcrypt($userData->password);
 		$user->save;
 
 		return $user;
@@ -219,6 +221,8 @@ class UserController extends Controller
 Dengan menggunakan __Single Responsibility Principle__ maka kode di __controller__ kita tidak terlihat banyak (__fat__) dan akan mudah untuk dibaca.
 
 Tambahan: prinsip seperti ini akan terlihat dan terasa lebih mudah ketika _project_ kita semakin kompleks dan besar.
+
+* * *
 
 #### Open Closed Principle
 
@@ -416,6 +420,8 @@ Mungkin terlihat sedikit meribetkan diri sendiri :D dan banyak penggunaan __clas
 Akan tetapi, disisi lain prinsip ini sangat mempermudah apabila salah satu __class__ bermasalah, 
 kita cukup berurusan dengan __class__ yang bermasalah tanpa menyentuh __class__ yang lainnya.
 
+* * *
+
 #### Liskov Substitution Principle
 
 > Misalkan __q(x)__ adalah properti yang dapat dibuktikan tentang objek __x__ dari tipe __T__. 
@@ -432,6 +438,123 @@ Pada dasarnya, perlu diperhatikan saat kita menggunakan _interface_ di dalam seb
 kita tidak hanya memiliki kontrak input yang diterima _interface_, akan tetapi juga _output_ yang dikembalikan oleh _class_ yang berbeda 
 yang mengimplementasikan _interface_ tersebut dan mereka seharusnya berasal dari tipe yang sama.
 
+Mari kita mulai dengan sebuah kasus.
+Kita asumsikan bahwa kita mempunyai sebuah abstraksi _class_ bernama `Duck` yaitu gambaran dari objek Bebek. 
+Di dalam _class_ tersebut pastinya terdapat beberapa _method_ atau kegiatan apa saja yang bisa dilakukan oleh
+seekor bebek. Misalnya, bebek tersebut bisa berbunyi ( _quack_ ), terbang ( _fly_ ), dan berenang ( _swim_ ). 
+Maka kodenya akan terlihat seperti berikut
+
+```php:Duck.php
+<?php
+
+abstract class Duck
+{
+    abstract public function quack() : string; 
+    abstract public function swim() : string; 
+    abstract public function fly() : string; 
+}
+```
+
+Kemudian, kita coba implementasikan abstraksi _class_ diatas pada sebuah objek mainan bebek karet atau pada kasus ini
+kita mencoba membuat _class_ dengan nama `RubberDuck` sebagai gambarannya.
+Dan mainan bebek karet ini ternyata tidak bisa terbang layaknya bebek yang asli.
+
+```php:RubberDuck.php
+<?php
+
+class RubberDuck extends Duck
+{
+    public function quack()
+    {
+        $person = new Person();
+
+        if ($person->squeezeDuck($this)) {
+            return 'The duck is quicking `qweek`';
+        }
+
+        throw new Exception("A rubber duck can't quack on its own.");
+    }
+    
+    public function swim()
+    {
+        $person = new Person();
+
+        if ($person->throwDuckInTub($this)) {
+            return 'The duck is swimming';
+        }
+
+        throw new Exception("A rubber duck can't swim on its own.");
+    }
+
+    public function fly()
+    {
+        throw new Exception("A rubber duck can't fly on its own.");
+    }
+```
+
+Kita akan menyalahi aturan prinsip `Liskov` apabila kita memaksa ( _override_ ) _method_ yang sudah kita deklarasikan.
+Dikarenakan kita perlu mengganti juga semua _method_ yang dimiliki oleh _parent class_ dan kita tidak menggunakan kembali
+_method_ yang sudah ada. Jadi bagaimana kita bisa memperbaikinya? 
+Kita bisa menghilangkan abstraksi `Duck` dengan memanfaatkan __contract/interface__.
+Kita tidak akan menggunakan basis _class_ `Duck` lagi. Akan tetapi kita akan membuat bebek yang
+bisa berbunyi, terbang ataupun hanya bisa berenang saja misalkan.
+
+Sehingga kita perlu mempunyai kode seperti berikut
+
+```php
+<?php
+
+interface QuackableInterface
+{
+    public function quack() : string;
+}
+interface FlyableInterface
+{
+    public function fly() : string;
+}
+interface SwimmableInterface
+{
+    public function swim() : string;
+}
+```
+
+Dan kemudian pada _class_ `RubberDuck` kita implementasikan _interface_ yang hanya kita perlukan.
+
+```php:RubberDuck.php
+<?php
+
+class RubberDuck implements QuackableInterface, SwimmableInterface
+{
+    public function quack() : string
+    {
+        $person = new Person();
+
+        if ($person->squeezeDuck($this)) {
+            return 'The duck is quicking `qweek`';
+        }
+
+        throw new Exception("A rubber duck can't quack on its own.");
+    }
+    
+    public function swim() : string
+    {
+        $person = new Person();
+
+        if ($person->throwDuckInTub($this)) {
+            return 'The duck is swimming';
+        }
+
+        throw new Exception("A rubber duck can't swim on its own.");
+    }
+```
+
+Jadi, seekor bebek akan tetap menjadi bebek, dan sebuah mainan bebek karet akan tetap menjadi mainan, 
+bukan seekor bebek yang asli.
+Kita harus bisa subtitusikan _sub-class_ atau _class_ turunan kapan saja dan 
+kita dapat mengekspetasikan untuk melakukan apa yang ingin kita harapkan dalam sebuah objek.
+
+***
+
 #### Interface Segregation Principle
 
 > Sebuah __client__ tidak boleh ketergantungan menggunakan __method/function__ yang tidak digunakan.
@@ -446,6 +569,74 @@ Jika sudah ada _interface_ yang tersedia, jangan menambahkan kode baru di _inter
 yang masih berhubungan dengan _interface_ lama, kemudian baru kita melakukan _implement_. Apalagi, dalam suatu _class_
 kita dapat melakukan implementasi lebih dari satu _interface_, jadi mengapa kita tidak memanfaatkan itu?
 
+Kita coba asumsikan bahwa kita mempunyai _class_ bernama `Subscriber` 
+dan _class_ ini merupakan turunan dari _class_ `Model`.
+
+```php
+<?php
+
+use Illuminate\Database\Eloquent\Model;
+
+class Subscriber extends Model
+{
+    public function getNotifyEmail()
+    {
+        // mengirimkan pemberitahuan email
+    }
+}
+```
+
+Kemudian kita juga mempunyai _class_ `Notifications`, dimana di dalamnya terdapat _method_ __send__ 
+yang berfungsi untuk mengirimkan pemberitahuan pada penerima ( _subscriber_ ).
+
+```php
+<?php
+
+class Notifications
+{
+    public function send(Subscriber $subscriber, $message)
+    {
+        Mail::to($subscriber->getNotifyEmail())->queue($message);
+    }
+}
+```
+
+Pada kode diatas, _method_ __send__ membutuhkan _class_ `Subscriber` yang mana tipe datanya berupa `Eloquent`.
+Dikarenakan _class_ `Subscriber` merupakan turunan dari _class_ `Model` pada Laravel.
+
+Dan yang perlu diperhatikan disini adalah kita akan ketergantungan pada _method_ yang ada pada _class_ `Subscriber`
+karena dengan alasan apapun ketika _class_ `Model` berubah maka _class_ `Subscriber` juga akan ikut berubah.
+Itulah yang menyebabkan atau dinamakan dengan ketergantungan antar _class_.
+Lalu bagaimana kita mengatasi ketergantungan ini?
+
+Untuk mengatasi masalah ini, kita perlu membuat sebuah _interface_ baru yang mana hanya mempunyai
+_method_ __getNotifyEmail__. _Interface_ ini pada dasarnya menyatakan bahwa _subscriber_ kita perlu
+mengimplementasikan _method_ __getNotifyEmail__ sehingga kita bisa mendapatkan data email dari para _subscriber_.
+Dan dengan implementasi _interface_ ini, _method_ __send__ pada _class_ `Notifications` tidak lagi ketergantungan
+dengan _class_ `Subscriber`. Kode kita akan menjadi sepert berikut
+
+```php
+<?php
+
+interface NotifiableInterface
+{
+    public function getNotifyEmail() : string;
+}
+
+class Notifications
+{
+    public function send(NotifiableInterface $subscriber, $message)
+    {
+        Mail::to($subscriber->getNotifyEmail())->queue($message);
+    }
+}
+```
+
+Kita hanya mengurangi bagian parameter pada _method_ __send__ yang sebelumnya kita _passing_ _class_ dari `Subscriber`
+menjadi _interface_ `NotifiableInterface` sehingga kita hanya bergantung pada satu _method_ _interface_ yang ada.
+
+* * *
+
 #### Dependency Inversion Principle
 
 > 1. _High-Level Class_ tidak boleh ketergantungan dengan _Low-Level Class_. Dimana keduanya harus bergantung pada sebuah abstraksi.
@@ -459,18 +650,97 @@ Dan itu menyalahi aturan jika menggunakan prinsip ini.
 Setiap __class__ yang memiliki kompleksitas tinggi tidak boleh bergantung pada __class__ yang memiliki kompleksitas rendah, 
 dan untuk melakukan komunikasi setiap __class__ harus melalui abstraksinya ( _interface_ ).
 
+Biasanya, kita langsung menuliskan kode seperti dibawah ketika ingin menampilan data pengguna,
+alih-alih melakukan _query_ pada _method_ __index__ didalam __controller__.
+
+```php:UserController.php
+<?php
+
+public function index(User $user)
+{
+    $users = $user->where('created_at', '>=', Carbon::yerterday())->get();
+
+    return response()->json(['users' => $users], 200);
+}
+```
+
+Dengan prinsip `Dependency Inversion` kita bisa memanfaatkan _repository_ dan _interface_
+agar sebuah _class_ dapat terorganisir dengan baik dan memiliki susunan atau hierarki.
+
+1. Membuat _class_ baru bernama `UserRepository` yang mengimplementasikan _interface_ `UserRepositoryInterface`
+
+```php
+<?php
+
+use App\Models\User;
+
+class UserRepository implements UserRepositoryInterface
+{
+    /**
+     * Gets user records from database registered
+     * after certain date
+     *
+     * param 	Carbon $date
+     * @return 	Illuminate\Database\Eloquent\Collection
+     */
+    public function getAfterDate(Carbon $date)
+    {
+        return User::where('created_at', '>=', $date)->get();
+    }
+}
+```
+
+2. Membuat _class interface_ dengan bernama `UserRepositoryInterface` sebagai __contract__ kita.
+
+```php:UserRepositoryInterface.php
+<?php
+
+interface UserRepositoryInterface
+{
+    public function getAfterDate(Carbon $date);
+}
+```
+
+3. Kemudian pada __controller__ kita coba _passing_ dengan _interface_ yang sudah kita buat tadi.
+
+```php:UserController.php
+<?php
+
+public function index(UserRepositoryInterface $user)
+{
+    $users = $user->getAfterDate(Carbon::yerterday());
+
+    return response()->json(['users' => $users], 200);
+}
+```
+
+Oke, kode kita sekarang terlihat lebih _clean_ dan sekaligus mempunyai susunan yang teratur.
+
 #### Penutup
 
-Konsep __SOLID__ perlu dipahami oleh setiap _Software Engineer_ setelah mempelajari __Object Oriented Programming__ (__OOP__). 
-Dengan implementasi konsep __SOLID__ ini, 
-maka kode yang kita tulis akan lebih __reuseable__, __maintainable__, __scalable__, dan __testable__.
+Konsep __SOLID__ perlu dipahami oleh setiap _Software Engineer_ setelah mempelajari __Object Oriented Programming__ (__OOP__).
 
+Sebagai catatan, Konsep __SOLID__ ini merupakan sebuah prinsip, bukan aturan. Jadi perlunya melihat konteks dari
+kode yang ada, bukan semata-mata harus diimplementasikan sesuai dengan prinsip ini.
 
-Sekian dan Semoga bermanfaat. Sampai Jumpa.
+Jika kode kita sudah mudah untuk dibaca atau mungkin sangat sederhana kemudian kita mencoba
+menerapkan prinsip ini, maka yang akan terjadi kita akan membuatnya lebih rumit dan akan 
+menyulitkan diri sendiri untuk memeliharanya ( _maintenance_ ) nanti.
+Sehingga kita perlu mencari tahu _trade-offs_ dan _common sense_ dari penggunaan konsep ini.
+
+Konsep __SOLID__ hanyalah sebuah alat, bukan __GOAL__ atau tujuan.
+Jadi, yang terpenting capaian dari konsep ini adalah kode kita bisa lebih baik, lebih terstruktur yang perlu 
+diupayakan bukan mengupayakan konsepnya untuk dapat dicapai.
+
+Dan yang terakhir, dengan implementasi konsep __SOLID__ ini, 
+seharusnya kode yang kita tulis akan lebih __reuseable__, __maintainable__, __scalable__, dan __testable__.
+
+Sekian dan Semoga bermanfaat. Sampai Jumpa. <i className="twa twa-waving-hand"></i>
 
 
 Referensi:
-1. https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design
-2. https://medium.com/tlabcircle/prinsip-pemrograman-solid-b63c47ca7f4a
-3. https://blog.enggartivandi.com/solid-design-principle-laravel
-4. https://itnext.io/solid-principles-explanation-and-examples-715b975dcad4
+1. [The First Five Principles of Object Oriented Design](https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)
+2. [Prinsip Pemrograman SOLID](https://medium.com/tlabcircle/prinsip-pemrograman-solid-b63c47ca7f4a)
+3. [SOLID Design Principle Laravel](https://blog.enggartivandi.com/solid-design-principle-laravel)
+4. [SOLID Principles Explanation and Examples](https://itnext.io/solid-principles-explanation-and-examples-715b975dcad4)
+5. [Katerina Trajchevska in Laravel Conference](https://www.youtube.com/watch?v=rtmFCcjEgEw&t=1387s)
