@@ -9,7 +9,7 @@ const Image = ({ shouldOpenLightbox = true, ...rest }) => {
     blurDataURL:
       'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcvWS1LgAGJQIpt50GkgAAAABJRU5ErkJggg==',
   }
-  if (rest.src === '/static/images/logo.png') blurData = {}
+  if (rest.src === '/static/images/new-image.png') blurData = {}
   const [openLightbox, setOpenLightbox] = useState(false)
   const handleOpenLightbox = () => {
     if (!shouldOpenLightbox) return

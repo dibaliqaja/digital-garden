@@ -60,7 +60,7 @@ const ProfileCard = () => {
           className="flex flex-col transition-all duration-200 ease-out xl:shadow-lg shadow-cyan-100/50 dark:shadow-cyan-700/50 xl:rounded-lg bg-white dark:bg-dark overflow-hidden"
         >
           <Image
-            src={'/static/images/logo.png'}
+            src={'/static/images/new-image.png'}
             alt="avatar"
             width="550px"
             height="550px"
@@ -162,7 +162,7 @@ const ProfileInfo = () => (
         />
       </svg>
 
-      <p className="px-2 text-[15px]">
+      <p className="px-2 mt-1 text-[15px]">
         East Java - Indonesia
         <span className="align-middle flag-vn ml-1">
           <Twemoji emoji="flag-indonesia" />

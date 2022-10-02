@@ -42,6 +42,11 @@
   }
 }
 
+.prose > p > a {
+  text-underline-offset: 3.5px;
+  text-decoration-thickness: 2px;
+}
+
 .prose-lg blockquote {
   background: #ebebeb;
   color: #3d3b3b;
@@ -52,8 +57,9 @@
 }
 
 .dark .dark\:prose-dark blockquote {
-  background: #656565;
-  border-left-color: #b7abab !important;
+  background: #222222;
+  color: #ebebeb;
+  border-left-color: #b6b6b6 !important;
 }
 
 .prose.prose-lg :not(pre) > code:not([class*='language']) {
