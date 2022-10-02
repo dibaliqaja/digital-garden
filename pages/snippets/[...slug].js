@@ -35,10 +35,10 @@ export default function Snippet({ snippet }) {
       ) : (
         <div className="mt-24 text-center">
           <PageTitle>
-            Under Construction{' '}
             <span role="img" aria-label="roadwork sign">
               🚧
             </span>
+            <p className="mt-10">Under Construction</p>
           </PageTitle>
         </div>
       )}
