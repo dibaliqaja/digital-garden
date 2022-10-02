@@ -1,0 +1,476 @@
+---
+title: Menjadi Seorang Pengembang Yang Baik Dengan Menggunakan SOLID Design Principles
+date: '2022-10-01'
+tags: ['solid','design','principle','engineer','developer']
+draft: false
+summary: Bagaimana menulis kode yang mudah untuk dipelihara, dikembangkan maupun mudah dipahami bagi para pengembang
+images: ['/static/images/quit.jpg']
+authors: ['default']
+---
+
+
+### Pengantar
+
+Menjadi seorang _Software Engineer_ terkadang kita sering:
+- Membaca berulang-ulang beberapa kode untuk sampai ke bagian yang ingin kita ubah.
+- Sulit memahami dengan apa yang diharapkan oleh __method/function__ yang sudah ada.
+- Menghabiskan banyak waktu hanya untuk memperbaiki sebuah _bug_ kecil ( _minor_ ).
+- Menghabiskan lebih banyak waktu untuk membaca kode yang ada daripada menulis kode secara langsung.
+
+Nah, dari keresahan-keresahan tersebut.
+Ada sebuah prinsip, agar hidup kita sebagai seorang _Software Engineer_ dapat lebih mudah/terbantu.
+Yap, prinsip tersebut adalah __SOLID Design Principles__.
+
+Kita akan belajar dan mencoba memahami poin-poin berikut:
+
+- Apa itu __SOLID Design Principles__?
+- Bagaimana prinsip tersebut dapat membuat hidup kita (sebagai seorang _Software Engineer_) lebih mudah?
+- Apa saja prinsip-prinsip yang ada pada __SOLID__?
+- Apa tujuan dari masing masing prinsip tersebut?
+- Dan bagaimana jika kita tidak menggunakan prinsip __SOLID__ tersebut dalam _project_ kita?
+
+Secara umum, dengan adanya prinsip __SOLID__ paling tidak ada beberapa poin penting yang bisa kita ambil manfaatnya, yaitu:
+- Untuk membuat kode kita lebih mudah dipelihara (_maintenance_).
+- Untuk memudahkan perluasan sistem dengan fungsionalitas baru dengan cepat tanpa merusak yang sudah ada.
+- Untuk membuat kode kita lebih mudah dibaca dan dipahami, sehingga kita menghabiskan lebih sedikit waktu 
+  untuk mencari tahu apa yang sebenarnya perlu dilakukan dan kita bisa lebih banyak waktu untuk mengembangkan sebuah solusi.
+
+
+#### Apa itu SOLID Design Principle?
+
+__SOLID__ adalah sebuah akronim dari lima prinsip __Object-Oriented Design__ (__OOD__) yang dipelopori pertama kali 
+oleh [__Robert C. Martin__](https://en.wikipedia.org/wiki/Robert_C._Martin).
+Prinsip ini biasa diterapkan pada saat berkecimpung dalam dunia pemrograman berorientasi objek.
+
+Prinsip ini adalah praktek dalam mengembangkan sebuah program dengan mempertimbangkan pemeliharaan 
+serta pengembangan lebih lanjut agar kode dapat mudah untuk dirawat, mudah dimengerti serta bersifat fleksibel.
+
+Dengan mengimplementasikan prinsip ini, kita dapat terbantu dalam menghindari _bad code_,
+mudah dalam melakukan _refactoring_ serta sistem kita dapat dikembangkan secara [__Agile__](https://en.wikipedia.org/wiki/Agile_software_development)
+atau __Adaptive__ (mudah dalam beradaptasi mengikuti perkembangan).
+
+__SOLID__ sendiri merupakan sebuah akronim dari lima prinsip, yang terdiri dari:
+- __S__	- __Single Responsibility Principle__
+- __O__	- __Open Closed Principle__
+- __L__	- __Liskov Substitution Principle__
+- __I__	- __Interface Segregation Principle__
+- __D__	- __Dependency Inversion Principle__
+
+* * *
+
+#### Single Responsibility Principle
+
+> Sebuah __class__ hanya boleh memiliki satu tanggung jawab, sehingga tanggung jawab untuk __class__ 
+> tersebut hanyalah tunggal, yaitu tanggung jawab yang hanya berkaitan dengan __class__ tersebut.
+
+
+Maksud dari penjelasan di atas adalah, sebuah __class__ hanya diperuntukkan 
+dengan hal yang berkaitan atau berhubungan dengan __class__ tersebut.
+Sebagai contoh, kita mempunyai __class__ dengan nama `Payment`.
+
+Maka di dalam __class__ tersebut seharusnya hanya berurusan dengan kegiatan __payment__ saja, tidak lebih,
+seperti melakukan proses order misalnya ataupun menyimpan data pembeli. Kedua hal tersebut memang masih 
+ada hubungannya dengan __payment__, akan tetapi tanggung jawab tersebut dapat dipisah, agar __class__ `Payment`
+bisa fokus menangani kegiatan __payment__ saja.
+
+Atau pada kasus yang lain
+kita contohkan pada Laravel, kita bisa deklarasikan validasi __request__ di dalam __controller__ secara langsung. 
+Seperti berikut
+
+```php:app\Http\Controllers\UserController.php showLineNumbers
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class UserController extends Controller
+{
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  		 $user
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request, User $user)
+    {
+        $validatedData = $request->validate([
+			'name' 	   => 'required',
+			'email'	   => 'required|unique:users|email',
+			'password' => 'required',
+        ]);
+
+        $user->name     = $request->name;
+        $user->email    = $request->email;
+        $user->password = $request->password;
+        $user->save;
+
+        return response()->json(['user' => $user], 201);
+    }
+}
+```
+
+Namun alih-alih dengan cara tersebut, _method_ `store` seharusnya hanya bertanggung jawab untuk menyimpan data saja, bukan
+melakukan validasi data. Untuk menerapkan __Single Responsibility Principle__, kita dapat memanfaatkan 
+fitur `FormRequest` pada Laravel. Jadi, proses validasi form dapat berdiri sendiri, tidak menjadi satu dalam _method_ `store`. 
+Sehingga, kita bisa me-_refactor_ kode menjadi seperti berikut
+
+1. Membuat __class__ baru bernama `StoreUserRequest` yang ditujukan hanya untuk validasi form user.
+
+```php:app\Http\Requests\StoreUserRequest.php
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreUserRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'name' 	   => 'required',
+			'email'	   => 'required|unique:users|email',
+			'password' => 'required',
+        ];
+    }
+}
+```
+
+2. Membuat __class__ baru bernama `UserRepository`, dimana pada contoh ini, kita membuat _function_ `create` untuk menyimpan data user.
+
+```php:app\Repositories\UserRepository.php
+<?php
+
+namespace App\Repositories;
+
+use App\Models\User;
+
+class UserRepository
+{
+    /**
+     * Saves the resource in the database
+     *
+     * param 	object $userData
+     * @return 	bool
+     */
+    public function create($userData)
+    {
+        $user			= new User();
+		$user->name 	= $request->name;
+        $user->email 	= $request->email;
+        $user->password = bcrypt($request->password);
+		$user->save;
+
+		return $user;
+    }
+}
+```
+
+3. Kemudian pada _method_ `store` di _class_ `UserController`, kita cukup mendeklarasikan `StoreUserRequest` dan `UserRepository` sebagai _parameters_ 
+   yang nantinya bisa dipanggil di dalam _method_ kemudian disimpan pada sebuah _variable_.
+   Dan boom! Kode kita terlihat lebih _clean_ sekarang dan mudah untuk dibaca.
+
+
+```php:app\Http\Controllers\UserController.php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Repositories\UserRepository;
+use Illuminate\Http\Requests\StoreUserRequest;
+use Illuminate\Http\Response;
+
+class UserController extends Controller
+{
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Requests\StoreUserRequest	$request
+     * @param  \App\Repositories\UserRepository  			$userRepository
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreUserRequest $request, UserRepository $userRepository)   
+    {
+        $user = $userRepository->create($request);
+
+		return response()->json(['user' => $user], 201);
+    }
+}
+```
+
+Dengan menggunakan __Single Responsibility Principle__ maka kode di __controller__ kita tidak terlihat banyak (__fat__) dan akan mudah untuk dibaca.
+
+Tambahan: prinsip seperti ini akan terlihat dan terasa lebih mudah ketika _project_ kita semakin kompleks dan besar.
+
+#### Open Closed Principle
+
+> Sebuah __entitas__ atau __object__ harus terbuka untuk diperluas (__extend__), namun tertutup untuk dapat dimodifikasi.
+
+Memperluas ( _extend_ ) disini dapat diartikan ketika kita menambah fungsionalitas sebuah _object_ tanpa harus mengubah kode yang sudah ada.
+Yang mana kita bisa memisahkan setiap _behaviour_ atau tingkah laku _object_ agar mudah di _extend_ oleh __class__ lain.
+
+Tujuan dari prinsip ini adalah untuk menjaga kode yang sudah ada. 
+Kode yang sudah berjalan agar dapat terhindar dari kerusakan maupun _error_ yang bisa disebabkan
+ketika kita mengimplementasikan sebuah fitur baru.
+
+Pada bagian ini, kita bisa contohkan ketika kita mempunyai sebuah __class__ bernama `Payment` dan di __class__ ini
+berisikan dengan hal yang berhubungan pembayaran pada sistem kita. Pada __class__ ini kita asumsikan mempunyai dua _method_
+pembayaran yaitu melalui __BANK A__ dan __BANK B__ misalnya.
+
+```php:app\Entities\Payment.php
+<?php
+
+namespace App\Entities;
+
+class Payment
+{
+    public function payWithBankA()
+    {
+        // proses pembayaran dengan BANK A
+    }
+
+    public function payWithBankB()
+    {
+        // proses pembayaran dengan BANK B
+    }
+}
+```
+
+Kemudian pada bagian __controller__, kita bisa memanfaatkan _function_-nya sebagai berikut:
+
+```php:app\Http\Controllers\OrderController.php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Entities\Payment;
+use App\Factory\PaymentFactory;
+use Illuminate\Http\Request;
+
+class OrderController extends Controller
+{
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $payment = new Payment();
+
+        switch ($request->type) {
+            case 'Bank_A':
+                $payment->payWithBankA();
+                break;
+
+            case 'Bank_B':
+                $payment->payWithBankB();
+                break;
+            
+            default:
+                return new Exception('Metode pembayaran tidak didukung');
+                break;
+        }
+    }
+}
+```
+
+Kode yang sudah kita tulis, sekilas tidak ada masalah. Apa yang menjadi masalahnya?
+Masalah akan terjadi ketika kita mencoba mengimplementasikan metode pembayaran yang lainnya.
+Sebagai contoh, dikemudian hari sistem kita perlu penambahan metode pembayaran melalui __BANK C__ misalkan.
+
+Nah, jika kita tetap mempertahankan kode yang sudah ada. Maka setiap kita mengimplementasikan metode pembayaran baru
+dikemudian hari, seperti penambahan metode __BANK C__ tadi, kita perlu melakukan perubahan pada class `Payment` yang sudah kita buat tadi.
+Dan apabila ada kode yang bermasalah, dapat dipastikan _method_ yang sudah kita deklarasikan pada satu file tersebut
+akan ikut terkena dampaknya sehingga sistem kita bisa bermasalah.
+
+Nah, dengan menerapkan `Open Closed Principle` kita dapat meminimalisir permasalahan tersebut. Mari kita coba.
+
+1. Pertama, kita buat terlebih dahulu sebuah __class__ __interface__/__contracts__ yang harus diikuti oleh setiap __class__
+   yang mengimplementasikannya. Pada kasus ini, kita bisa membuat sebuah __interface__ `Payment` dengan __method__ _pay_.
+
+```php:app\Contracts\Payment.php
+<?php
+
+namespace App\Contracts;
+
+interface Payment
+{
+    public function pay();
+}
+```
+
+2. Kemudian, ketika kita ingin membuat metode pembayaran baru, kita cukup membuat __class__ dengan nama entitas yang ingin kita buat seperti berikut
+
+```php:app\Entities\Bank_A.php
+<?php
+
+namespace App\Entities;
+
+use App\Contracts\Payment;
+
+class Bank_A implements Payment
+{
+    public function pay()
+    {
+        // proses pembayaran menggunakan BANK A
+    }
+}
+```
+```php:app\Entities\Bank_B.php
+<?php
+
+namespace App\Entities;
+
+use App\Contracts\Payment;
+
+class Bank_B implements Payment
+{
+    public function pay()
+    {
+        // proses pembayaran menggunakan BANK B
+    }
+}
+```
+
+3. Selanjutnya, kita perlu membuat sebuah __class__ baru yang tugasnya untuk meneruskan permintaan __request__ metode pembayaran ke masing-masing __class__ sebagai berikut:
+
+```php:app\Factory\PaymentFactory.php
+<?php
+
+namespace App\Factory;
+
+use App\Entities\Bank_A;
+use App\Entities\Bank_B;
+use Exception;
+
+class PaymentFactory
+{
+    public function initializePayment($type)
+    {
+        switch ($type) {
+            case 'BANK_A':
+                return new Bank_A();
+                break;
+
+            case 'BANK_B':
+                return new Bank_B();
+                break;
+            
+            default:
+                return new Exception('Metode pembayaran tidak didukung');
+                break;
+        }
+    }
+}
+```
+
+4. Sehingga, pada `OrderController` kita cukup memanggilnya seperti ini ketika kita menggunakannya.
+
+```php:app\Http\Controllers\OrderController.php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Entities\Payment;
+use App\Factory\PaymentFactory;
+use Illuminate\Http\Request;
+
+class OrderController extends Controller
+{
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function pay(Request $request)
+    {
+        $paymentFactory = new PaymentFactory();
+        $payment = $paymentFactory->initializePayment($request->type);
+        $payment->pay();
+    }
+}
+```
+
+Mungkin terlihat sedikit meribetkan diri sendiri :D dan banyak penggunaan __class__.
+Akan tetapi, disisi lain prinsip ini sangat mempermudah apabila salah satu __class__ bermasalah, 
+kita cukup berurusan dengan __class__ yang bermasalah tanpa menyentuh __class__ yang lainnya.
+
+#### Liskov Substitution Principle
+
+> Misalkan __q(x)__ adalah properti yang dapat dibuktikan tentang objek __x__ dari tipe __T__. 
+> Maka __q(y)__ harus dapat dibuktikan untuk objek __y__ dari tipe __S__ di mana __S__ adalah subtipe dari __T__.
+
+Maksud dari konsep ini yaitu _subclass_ atau _class_ turunan ( _child_ ), harus dapat disubstitusikan untuk kelas induk ( _parent_ ) nya.
+Konsep ini terkait dengan proses _inheritance_ suatu fungsi atau objek. 
+Dalam __Liskov Substitution Principle__, _super class_ harus dapat digantikan dengan objek dari _subclass_-nya tanpa berefek pada suatu kode yang sudah terimplementasi. 
+Hal ini dapat dilakukan dengan membuat objek dari _subclass_ yang memiliki perilaku sama dengan _superclass_, 
+misalnya parameter dan _return value_ yang sama dengan _superclass_.
+
+Ini membuktikan bahwa setiap implementasi _abstraction_ ( _interface_ ) harus dapat diganti di mana pun itu dan abstraksinya pun dapat diterima. 
+Pada dasarnya, perlu diperhatikan saat kita menggunakan _interface_ di dalam sebuah kode, 
+kita tidak hanya memiliki kontrak input yang diterima _interface_, akan tetapi juga _output_ yang dikembalikan oleh _class_ yang berbeda 
+yang mengimplementasikan _interface_ tersebut dan mereka seharusnya berasal dari tipe yang sama.
+
+#### Interface Segregation Principle
+
+> Sebuah __client__ tidak boleh ketergantungan menggunakan __method/function__ yang tidak digunakan.
+
+Apabila ada _interface_ yang mana isi dari _method_-nya terlalu umum dan banyak, maka perlu dipecah menjadi lebih kecil lagi
+agar nantinya kode mudah diimplementasikan oleh _class_ lainnya.
+
+Dalam pembuatan _interface_, akan lebih baik jika kita membuat banyak _interface_ dengan fungsi yang spesifik.
+Tujuan dari pemisahan _interface_ adalah agar tidak memaksa _client_ menggunakan kode yang tidak dibutuhkan/diperlukan.
+
+Jika sudah ada _interface_ yang tersedia, jangan menambahkan kode baru di _interface_. Lebih baik menambah _interface_ baru
+yang masih berhubungan dengan _interface_ lama, kemudian baru kita melakukan _implement_. Apalagi, dalam suatu _class_
+kita dapat melakukan implementasi lebih dari satu _interface_, jadi mengapa kita tidak memanfaatkan itu?
+
+#### Dependency Inversion Principle
+
+> 1. _High-Level Class_ tidak boleh ketergantungan dengan _Low-Level Class_. Dimana keduanya harus bergantung pada sebuah abstraksi.
+> 2. Mampu melakukan perubahan implementasi tanpa mengubah kode _High-Level_
+
+Kode yang terorganisir dengan baik selalu memiliki hierarki (hubungan/susunan). 
+Ada modul tingkat tinggi ( _High-Level Class_ ) dan modul tingkat rendah ( _Low-Level Class_ ). 
+Akan tetapi, terkadang sering kali kita membawa modul tingkat rendah langsung ke modul tingkat tinggi.
+Dan itu menyalahi aturan jika menggunakan prinsip ini.
+
+Setiap __class__ yang memiliki kompleksitas tinggi tidak boleh bergantung pada __class__ yang memiliki kompleksitas rendah, 
+dan untuk melakukan komunikasi setiap __class__ harus melalui abstraksinya ( _interface_ ).
+
+#### Penutup
+
+Konsep __SOLID__ perlu dipahami oleh setiap _Software Engineer_ setelah mempelajari __Object Oriented Programming__ (__OOP__). 
+Dengan implementasi konsep __SOLID__ ini, 
+maka kode yang kita tulis akan lebih __reuseable__, __maintainable__, __scalable__, dan __testable__.
+
+
+Sekian dan Semoga bermanfaat. Sampai Jumpa.
+
+
+Referensi:
+1. https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design
+2. https://medium.com/tlabcircle/prinsip-pemrograman-solid-b63c47ca7f4a
+3. https://blog.enggartivandi.com/solid-design-principle-laravel
+4. https://itnext.io/solid-principles-explanation-and-examples-715b975dcad4
