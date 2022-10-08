@@ -1,8 +1,8 @@
 ---
 title: Memahami Penggunaan Class Interface Pada PHP
-date: '2022-10-02'
+date: '2022-10-08'
 tags: ['php','interface','oop','design']
-draft: true
+draft: false
 summary: Kapan dan Bagaimana kita mengimplementasikan Interface Class
 images: ['/static/images/quit.jpg']
 authors: ['default']
@@ -90,7 +90,7 @@ public function __construct(payWithBankB $payment)
 Dalam sebuah _project_ yang besar, 
 jika kita memiliki banyak _class_ dan kita perlu mengubahnya, kita harus mengubah semua _class_ secara manual.
 
-Dan disini, dengan menggunakan _interface_. Masalah kita akan terpecahkan. Dan kita tidak perlu mengubah satu satu secara manual.
+Dan disini, dengan menggunakan _interface_. Masalah kita akan terpecahkan. Dan kita tidak perlu mengubah satu persatu secara manual.
 
 Sekarang, lihat kode yang berikut dan coba kita pahami apa yang terjadi ketika kita menggunakan _interface_.
 
@@ -142,10 +142,10 @@ $controller->store();
 ```
 
 Sekarang, jika kita mengubah dari `payWithBankA` ke `payWithBankB`, kita tidak perlu mengubah metode konstruktor secara manual. 
-Dalam metode konstruktor, kita telah menyuntikkan ( _inject_ ) sebuah _interface_, dan bukan sebuah _class_.
+Pada konstruktor, kita telah menyuntikkan ( _inject_ ) sebuah _interface_, dan bukan sebuah _class_.
 
 Pada contoh di atas, kita _passing_ parameter _pay_ menggunakan `payWithBankA` dan sekarang kita 
-ingin menulis _passing_ parameter _pay_ menggunakan `payWithBankb`. Dan kita bisa menulisnya seperti ini tanpa perlu mengubah
+ingin menulis _passing_ parameter _pay_ menggunakan `payWithBankB`. Dan kita bisa menulisnya seperti ini tanpa perlu mengubah
 __constructor__ seperti yang sebelumnya.
 
 ```php
