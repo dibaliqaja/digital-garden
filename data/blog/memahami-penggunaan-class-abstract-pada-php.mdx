@@ -1,8 +1,8 @@
 ---
 title: Memahami Penggunaan Class Abstract Pada PHP
-date: '2022-10-02'
+date: '2022-10-11'
 tags: ['php','abstract','oop','design']
-draft: true
+draft: false
 summary: Kapan dan Bagaimana kita mengimplementasikan Abstract Class
 images: ['/static/images/quit.jpg']
 authors: ['default']
@@ -38,7 +38,7 @@ abstract class Brew
 }
 ```
 
-Dan pertanyaanya sekarang adalah, Bagaimana kita tahun bahwa suatu _method/function_ yang telah kita buat itu
+Dan pertanyaanya sekarang adalah, bagaimana kita tahun bahwa suatu _method/function_ yang telah kita buat itu
 akan dibutuhkan dan harus diimplementasikan?
 
 Lihat kode yang ada dibawah ini yaitu kita coba membuat _class_ bernama `Tea`, yang di dalamnya
@@ -70,9 +70,9 @@ class Tea
     public function make()
     {
         return $this
-                ->addTea()
-                ->addWater()
-                ->addSugar();   
+            ->addTea()
+            ->addWater()
+            ->addSugar();   
     }
 }
 
@@ -123,7 +123,7 @@ Terdapat beberapa _method_ yang sama seperti `addWater` dan `addSugar`.
 
 Dalam kasus ini, kita bisa mengimplementasikan sebuah _abstract class_ agar tidak terjadi
 duplikasi kode yang sudah kita tulis, dan pastinya kode akan terlihat lebih bersih ( _clean_ ).
-Kita bisa melakukannya seperti berikut
+Kita bisa melakukannya sebagai berikut
 
 ```php:BrewingDrink.php
 <?php
