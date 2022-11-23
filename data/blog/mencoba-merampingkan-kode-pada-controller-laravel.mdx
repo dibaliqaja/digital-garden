@@ -1,0 +1,481 @@
+---
+title: Mencoba Merampingkan Kode Pada Controller Laravel
+date: '2022-11-23'
+tags: ['php','laravel','mvc','tips']
+draft: false
+summary: Controller merupakan salah satu yang mempunyai peran besar dalam sebuah proyek yang berbasiskan MVC
+images: ['/static/images/quit.jpg']
+authors: ['default']
+---
+
+
+### Pengantar
+
+_Controller_ merupakan salah satu bagian yang mempunyai peran besar dalam sebuah proyek berbasiskan __MVC__ (_Model View Controller_).
+_Controller_ biasanya digunakan secara efektif untuk mengambil permintaan pengguna (_request_), melakukan beberapa jenis _logic_,
+dan kemudian juga mengembalikan respon (_response_) yang didapat dari _View_.
+
+Jika kita pernah mengerjakan proyek yang cukup besar, kita akan melihat bahwa akan memiliki banyak _controller_ dan dapat menjadi
+berantakan dengan cepat tanpa kita sadari. Pada tulisan kali ini, kita akan melihat bagaimana kita dapat membersihkan atau merampingkan _controller_
+yang mulai membesar/membengkak (_bloated_) pada Laravel.
+
+
+#### Masalah Dengan Pembengkakan Controller (_A Bloated Controller_)
+
+_Controller_ yang membengkak atau kode yang ada di dalamnya terlalu banyak akan menyebabkan beberapa masalah bagi para pengembang (_developer_).
+Setidaknya yang kita dapatkan adalah sebagai berikut:
+
+1. __Kesulitan untuk melacak bagian kode atau fungsi tertentu__
+
+Jika kita ingin mengerjakan dibagian kode tertentu pada _controller_ yang mulai membengkak, 
+kita mungkin perlu meluangkan waktu untuk melacak, dimana _method_ itu sebenarnya berada.
+
+Saat menggunakan _controller_ yang ramping dan dipisahkan secara logis atau kegunaannya masing-masing, 
+paling tidak ini akan membantu kita untuk lebih mudah mencari kode yang akan kita kerjakan.
+
+2. __Sulit untuk menemukan lokasi _bug_ yang tepat__
+
+Ketika kita menangani _authorization_, _validation_, _business logic_, dan pembuatan respon pada satu tempat, akan sulit untuk menentukan dengan tepat lokasi _bug_.
+
+3. __Sulit untuk menulis tes yang lebih kompleks pada kode kita__
+
+Terkadang sulit untuk menulis pengujian kode kita yang terlalu kompleks yang memiliki banyak baris dan melakukan banyak hal berbeda.
+Merampingkan kode membuat pengujian lebih mudah.
+
+
+#### Controller yang Bengkak (_A Bloated Controller_)
+
+Pada kesempatan kali ini, kita coba dengan menggunakan contoh studi kasus pada `UserController`
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+
+class UserController extends Controller
+{
+    public function store(Request $request): RedirectResponse
+    {
+        $this->authorize('create', User::class);
+        $request->validate([
+            'name'     => 'string|required|max:50',
+            'email'    => 'email|required|unique:users',
+            'password' => 'string|required|confirmed',
+        ]);
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => $request->password,
+        ]);
+        $user->generateAvatar();
+        $this->dispatch(RegisterUserToNewsletter::class);
+        return redirect(route('users.index'));
+    }
+
+    public function unsubscribe(User $user): RedirectResponse
+    {
+        $user->unsubscribeFromNewsletter();
+        return redirect(route('users.index'));
+    }
+}
+```
+
+**1. Pindah _Validation_ dan _Authorization_ ke dalam _Form Requests_**
+
+Salah satu hal pertama yang dapat kita lakukan adalah memindahkan validasi dan otorisasi yang ada pada _controller_ ke dalam _form request_.
+Kita bisa menggunakan perintah _artisan_ berikut untuk membuat _form request_ baru.
+
+```bash
+php artisan make:request StoreUserRequest
+```
+
+Perintah di atas akan membuat _class_ baru yaitu `StoreUserRequest.php` yang terdapat pada folder `app/Http/Requests`.
+_Form Request_ yang telah kita buat akan terlihat seperti berikut
+
+```php
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreUserRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return false;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            //
+        ];
+    }
+}
+```
+
+Kita dapat menggunakan `authorize()` _method_ untuk menentukan apakah pengguna harus diizinkan untuk melakukan permintaan.
+_Method_ ini harus mengembalikan berupa keluaran _true_ jika diizinkan atau _false_ jika tidak diizinkan.
+
+Kita juga bisa menggunakan `rules()` _method_ untuk menentukan aturan validasi apapun yang harus dijalankan pada _body_ permintaan.
+
+Kedua _method_ ini akan berjalan secara otomatis sebelum kita berhasil menjalankan kode apapun di dalam _controller_ tanpa perlu memanggil
+salah satu secara manual.
+
+```php
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreUserRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize(): bool
+    {
+        return Gate::allows('create', User::class);
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+            'name'     => 'string|required|max:50',
+            'email'    => 'email|required|unique:users',
+            'password' => 'string|required|confirmed',
+        ];
+    }
+}
+```
+
+Dan _controller_ kita sekarang akan terlihat seperti berikut
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+
+class UserController extends Controller
+{
+    public function store(StoreUserRequest $request): RedirectResponse
+    {
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => $request->password,
+        ]);
+        $user->generateAvatar();
+        $this->dispatch(RegisterUserToNewsletter::class);
+        return redirect(route('users.index'));
+    }
+
+    public function unsubscribe(User $user): RedirectResponse
+    {
+        $user->unsubscribeFromNewsletter();
+        return redirect(route('users.index'));
+    }
+}
+```
+
+
+**2. Pindah Logika yang Umum ke dalam _Action_ atau _Services_**
+
+Cara lain yang dapat kita gunakan untuk merampingkan `store()` _method_ adalah kita dapat memindahkan _business logic_ ke _action class_
+atau _service class_ yang terpisah.
+
+Dalam kasus penggunaan ini, kita dapat melihat bahwa fungsi utama `store()` _method_ adalah untuk membuat pengguna baru, membuat _avatar_,
+dan kemudian mengirimkan antrian tugas pendaftaran pengguna ke _newsletter_/buletin e-mail.
+
+Menurut pendapat saya, _action_ lebih cocok untuk contoh saat ini daripada _service_. Dikarenakan _action_ lebih _prefer_ untuk tugas yang kecil
+yang hanya melakukan hal tertentu daripada menggunakan _service_.
+
+Sedangkan untuk kode yang lebih besar yang berpotensi menjadi ratusan baris dan melakukan banyak hal, akan lebih cocok menggunakan _service_.
+Tapi kembali lagi, ini hanya soal kecocokan, alih-alih dalam sebuah tim ketika kita bekerja bersama rekan. Tidak ada standar yang mengikat
+terkait hal ini.
+
+```php
+<?php
+
+class StoreUserAction
+{
+    public function execute(Request $request): void
+    {
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => $request->password,
+        ]);
+        $user->generateAvatar();
+        $this->dispatch(RegisterUserToNewsletter::class);
+    }
+}
+```
+
+Sekarang kita dapat mengubah _controller_ kita untuk menggunakan _action class_ yang sudah kita buat seperti diatas
+
+```php
+<?php
+
+class UserController extends Controller
+{
+    public function store(StoreUserRequest $request, StoreUserAction $storeUserAction): RedirectResponse   
+    {
+        $storeUserAction->execute($request);
+        return redirect(route('users.index'));
+    }
+
+    public function unsubscribe(User $user): RedirectResponse
+    {
+        $user->unsubscribeFromNewsletter();
+        return redirect(route('users.index'));
+    }
+}
+```
+
+Seperti yang kita lihat, kita sekarang dapat mengeluarkan _business logic_ dari _method controller_ ke dalam sebuah _action class_.
+Ini berguna, karena _controller_ pada dasarnya adalah "penyambung" antara _request_ dan _response_ kita.
+
+Jadi sekarang kita telah mencoba mengurangi beban kognitif untuk memahami apa yang dilakukan oleh _method_ dengan memisahkan kode secara _logic_.
+
+Misalnya, ketika kita ingin memerikan otorisasi ataupun validasi, kita tahu bahwa yang perlu dicek adalah _form request_.
+Jika kita ingin memeriksa apa yang sedang dilakukan oleh permintaan data, kita dapat memeriksa _action class_ yang sudah kita buat.
+
+Manfaat lainnya yang dapat kita terima yaitu untuk mengabstraksi kode ke dalam _class_ yang terpisah, ini dapat membuat pengujian jauh lebih mudah
+dan lebih cepat.
+
+**3. Menggunakan _DTOs_ (_Data Transfer Objects_) dengan _Actions_**
+
+Manfaat besar lainnya dari mengekstraksi _business logic_ kita ke dalam _action class_ dan _service class_ adalah kita sekarang dapat menggunakan
+logika tersebut di tempat yang berbeda tanpa perlu duplikasi kode kita lagi.
+
+Sebagai contoh, anggaplah kita memiliki `UserController` yang menangani permintaan _web_ dan `Api/UserController` yang menangani permintaan _API_.
+Kita dapat asumsikan bahwa `store()` _method_ pada kedua _controller_ tersebut sama.
+
+Tapi apa yang akan kita lakukan jika permintaan _API_ kita tidak menggunakan _field email_ misalnya, melainkan menggunakan _field_ _*email_address*_ ?
+Kita tidak akan dapat meneruskan (_passing_) permintaan objek ke `StoreUserAction` _class_ karena akan mengekspektasikan permintaan objek yang memiliki _field email_.
+
+Untuk mengatasi masalah ini, kita dapat menggunakan **DTO**. Ini merupakan cara yang sangat berguna untuk memisahkan data dan meneruskan ke kode sistem
+kita tanpa terikat dengan apapun (dalam hal ini adalah _request_).
+
+Untuk menggunakan __DTO__ pada proyek kita, kita akan menggunakan _package_ dari __Spatie__ yaitu `spatie/data-transfer-object` dengan menggunakan perintah
+_artisan_ sebagai berikut
+
+```bash
+composer require spatie/data-transfer-object
+```
+
+Sekarang setelah paket terinstal, kita buat folder bernama `DataTransferObjects` didalam folder `App` dan membuat _class_ baru bernama `StoreUserDTO.php`.
+Kita juga perlu memastikan bahwa __DTO__ kita meng-_extends_ _class_ `Spatie\DataTransferObject\DataTransferObject`. 
+Kemudian kita dapat mendefinisikan tiga _field_ sebagai berikut:
+
+```php
+<?php
+
+namespace App\DataTransferObjects;
+
+use Spatie\DataTransferObject\DataTransferObject;
+
+class StoreUserDTO extends DataTransferObject
+{
+    public string $name;
+    
+    public string $email;
+ 
+    public string $password;
+}
+```
+
+Sekarang setelah kita melakukan ini, kita dapat menambahkan _method_ baru ke _form request_ kita yaitu `StoreUserRequest` yang sebelumnya untuk membuat
+dan mengembalikan `StoreUserDTO` _class_ seperti berikut
+
+```php
+<?php
+
+namespace App\Http\Requests;
+
+use App\DataTransferObjects\StoreUserDTO;
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreUserRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize(): bool
+    {
+        return Gate::allows('create', User::class);
+    }
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+            'name'     => 'string|required|max:50',
+            'email'    => 'email|required|unique:users',
+            'password' => 'string|required|confirmed',
+        ];
+    }
+  
+    /**
+     * Build and return a DTO.
+     *
+     * @return StoreUserDTO
+     */
+    public function toDTO(): StoreUserDTO
+    {
+        return new StoreUserDTO(
+            name: $this->name,
+            email: $this->email,
+            password: $this->password,
+        );
+    } 
+}
+```
+
+Sekarang kita dapat memperbarui _controller_ kita untuk dapat meneruskan (_passing_) __DTO__ ke dalam _action class_
+
+```php
+<?php
+
+class UserController extends Controller
+{
+    public function store(StoreUserRequest $request, StoreUserAction $storeUserAction): RedirectResponse   
+    {
+        $storeUserAction->execute($request->toDTO());
+        return redirect(route('users.index'));
+    }
+
+    public function unsubscribe(User $user): RedirectResponse
+    {
+        $user->unsubscribeFromNewsletter();
+        return redirect(route('users.index'));
+    }
+}
+```
+
+Terakhir, kita perlu memperbarui _action method_ kita untuk menerima __DTO__ sebagai argumen menggantikan _request object_
+
+```php
+<?php
+
+class StoreUserAction
+{
+    public function execute(StoreUserDTO $storeUserDTO): void
+    {
+        $user = User::create([
+            'name'     => $storeUserDTO->name,
+            'email'    => $storeUserDTO->email,
+            'password' => $storeUserDTO->password,
+        ]);
+        $user->generateAvatar();
+        $this->dispatch(RegisterUserToNewsletter::class);
+    }
+}
+```
+
+Hasil dari melakukan semua ini, sekarang kita telah sepenuhnya memisahkan _action_ dari _request object_.
+Yang artinya kita dapat menggunakan kembali _action_ ini dibanyak tempat seluruh sistem tanpa terikat pada struktur permintaan tertentu.
+
+**4. Menggunakan _Resource Controller_ atau _Single-Use Controller_**
+
+Cara (yang mungkin) terbaik untuk menjaga kerampingan _controller_ adalah dengan memastikan bahwa _controller_ tersebut adalah __"resource controller"__
+atau __"single-use controller"__. Sebelum melangkah lebih jauh dan mencoba memperbarui _controller_ kita, mari kita sejenak memperdalam apa maksud dari kedua istilah ini.
+
+Sebuah __"resource controller"__ adalah _controller_ yang menyediakan fungsionalitas berbasis di sekitar _resource_ tertentu.
+Jadi, dalam kasus kita, _resource_ kita adalah `User` dan kita ingin dapat melakukan operasi __CRUD__ (Create, Read, Update, Delete) pada model ini.
+
+__"resource controller"__ biasanya berisi _method_ `index()`, `create()`, `store()`, `show()`, `edit()`, `update()`, dan `destroy()`.
+Itupun kita tidak harus menyertakan semua _method_ ini. Dengan menggunakan jenis _controller_ ini, kita dapat menggunakan __routing RESTful__ kita sendiri.
+
+Sedangkan __"single-use controller"__ adalah _controller_ yang hanya memiliki satu _public method_ yaitu `__invoke()`.
+Ini sangat berguna ketika kita memiliki _controller_ yang tidak sesuai dengan salah satu metode __RESTful__ yang dimiliki oleh __"resource controller"__.
+
+Jadi, mari kita coba buat _controller_ baru dengan menggunakan perintah _artisan_ sebagai berikut:
+
+```bash
+php artisan make:controller UnsubscribeUserController -i
+```
+
+Perhatikan bagaimana kita _passing_ `-i` ke perintah sehingga _controller_ baru kita akan menjadi __"single-use controller"__ yang dapat dipanggil.
+Kita akan memiliki _controller_ yang terlihat seperti berikut:
+
+```php
+<?php
+
+class UnsubscribeUserController extends Controller
+{
+    public function __invoke(Request $request)
+    {
+        //
+    }
+}
+```
+
+Sekarang kita dapat memindahkan kode _method_ kita dan menghapus _method_ `unsubscribe` pada _controller_ kita yang sebelumnya.
+
+```php
+<?php
+
+class UnsubscribeUserController extends Controller
+{
+    public function __invoke(Request $request): RedirectResponse
+    {
+        $request->user->unsubscribeFromNewsletter();
+        return redirect(route('users.index'));
+    }
+}
+```
+
+
+#### Penutup
+
+Semoga pada kesempatan kali ini, kita dapat mendapat wawasan baru tentang berbagi jenis hal mengenai _controller_ pada Laravel
+agar tetap terlihat _clean_. Dan perlu diingat bahwa teknik yang ada di sini hanyalah pendapat pribadi.
+
+Karena diluar sana ada pengembang (_developer_) lain yang akan menggunakan pendekatan lain terkait _controller_ pada Laravel.
+Bagian terpentingnya yaitu konsisten dan menggunakan pendekatan yang sesuai dengan alur kerja kita sendiri,
+alih-alih apabila kita bekerja bersama tim, pastikan kita tidak membuat pendekatan sendiri agar kerja tim tetap bisa solid.
+Patuhi sesuai dengan keadaan alur kerja pada tim kita.
+
+Teruslah membangun hal-hal yang luar biasa! <i className="twa twa-rocket"></i>
+
+Sekian dan Semoga bermanfaat. Sampai Jumpa. <i className="twa twa-waving-hand"></i>
+
+
+Referensi:
+- [Cleaning Up Laravel Controllers](https://medium.com/codex/cleaning-up-laravel-controllers-a2934b7bf1c)
