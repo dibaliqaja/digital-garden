@@ -61,7 +61,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, pag
               <div className="hidden xl:block py-4 xl:py-8 border-b border-gray-200 dark:border-gray-700">
                 <Link
                   href={`/blog/page/${page}`}
-                  className="flex text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                  className="flex text-primary-500 hover:text-primary-600 dark:hover:text-primary-200"
                 >
                   <svg viewBox="0 -9 3 24" className="overflow-visible mr-3 w-auto h-6">
                     <path
@@ -124,7 +124,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, pag
                 {/* <div className="pt-4 xl:pt-8">
                   <Link
                     href={`/blog/page/${page}`}
-                    className="flex text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                    className="flex text-primary-500 hover:text-primary-600 dark:hover:text-primary-200"
                   >
                     <svg viewBox="0 -9 3 24" class="overflow-visible mr-3 w-auto h-6"><path d="M3 0L0 3L3 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                     Back to the blog

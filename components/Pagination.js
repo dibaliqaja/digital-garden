@@ -3,6 +3,8 @@ import Link from '@/components/Link'
 export default function Pagination({ totalPages, currentPage }) {
   const prevPage = parseInt(currentPage) - 1 > 0
   const nextPage = parseInt(currentPage) + 1 <= parseInt(totalPages)
+  const buttonStyle =
+    'rounded py-1 px-1 font-medium text-gray-900 sm:py-2 sm:px-3 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700'
 
   return (
     <div className="pt-6 pb-8 space-y-2 md:space-y-5">
@@ -14,7 +16,9 @@ export default function Pagination({ totalPages, currentPage }) {
         )}
         {prevPage && (
           <Link href={currentPage - 1 === 1 ? `/blog/` : `/blog/page/${currentPage - 1}`}>
-            <button rel="previous">Previous</button>
+            <button rel="previous" className={buttonStyle}>
+              Previous
+            </button>
           </Link>
         )}
         <span>
@@ -27,7 +31,9 @@ export default function Pagination({ totalPages, currentPage }) {
         )}
         {nextPage && (
           <Link href={`/blog/page/${currentPage + 1}`}>
-            <button rel="next">Next</button>
+            <button rel="next" className={buttonStyle}>
+              Next
+            </button>
           </Link>
         )}
       </nav>
