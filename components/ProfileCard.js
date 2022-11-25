@@ -66,6 +66,7 @@ const ProfileCard = () => {
             height="550px"
             className="object-cover"
             objectPosition="50% 16%"
+            priority="true"
           />
           <Spotify data={data} />
           <ProfileInfo />

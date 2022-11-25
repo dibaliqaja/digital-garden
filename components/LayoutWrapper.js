@@ -21,6 +21,7 @@ const LayoutWrapper = ({ children }) => {
                 <div className="mr-3 flex justify-center items-center">
                   <NextImage
                     src="/static/images/new-image.png"
+                    alt="logo"
                     width="45px"
                     height="45px"
                     className="rounded-full"
