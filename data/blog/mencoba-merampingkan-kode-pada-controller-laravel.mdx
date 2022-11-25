@@ -47,7 +47,7 @@ Merampingkan kode membuat pengujian lebih mudah.
 
 Pada kesempatan kali ini, kita coba dengan menggunakan contoh studi kasus pada `UserController`
 
-```php
+```php:app\Http\Controllers\UserController.php
 <?php
 
 namespace App\Http\Controllers;
@@ -97,7 +97,7 @@ php artisan make:request StoreUserRequest
 Perintah di atas akan membuat _class_ baru yaitu `StoreUserRequest.php` yang terdapat pada folder `app/Http/Requests`.
 _Form Request_ yang telah kita buat akan terlihat seperti berikut
 
-```php
+```php:app\Http\Requests\StoreUserRequest.php
 <?php
 
 namespace App\Http\Requests;
@@ -138,7 +138,7 @@ Kita juga bisa menggunakan `rules()` _method_ untuk menentukan aturan validasi a
 Kedua _method_ ini akan berjalan secara otomatis sebelum kita berhasil menjalankan kode apapun di dalam _controller_ tanpa perlu memanggil
 salah satu secara manual.
 
-```php
+```php:app\Http\Requests\StoreUserRequest.php
 <?php
 
 namespace App\Http\Requests;
@@ -175,7 +175,7 @@ class StoreUserRequest extends FormRequest
 
 Dan _controller_ kita sekarang akan terlihat seperti berikut
 
-```php
+```php:app\Http\Controllers\UserController.php
 <?php
 
 namespace App\Http\Controllers;
@@ -243,7 +243,7 @@ class StoreUserAction
 
 Sekarang kita dapat mengubah _controller_ kita untuk menggunakan _action class_ yang sudah kita buat seperti diatas
 
-```php
+```php:app\Http\Controllers\UserController.php
 <?php
 
 class UserController extends Controller
@@ -298,7 +298,7 @@ Sekarang setelah paket terinstal, kita buat folder bernama `DataTransferObjects`
 Kita juga perlu memastikan bahwa __DTO__ kita meng-_extends_ _class_ `Spatie\DataTransferObject\DataTransferObject`. 
 Kemudian kita dapat mendefinisikan tiga _field_ sebagai berikut:
 
-```php
+```php:app\DataTransferObjects\StoreUserDTO.php
 <?php
 
 namespace App\DataTransferObjects;
@@ -318,7 +318,7 @@ class StoreUserDTO extends DataTransferObject
 Sekarang setelah kita melakukan ini, kita dapat menambahkan _method_ baru ke _form request_ kita yaitu `StoreUserRequest` yang sebelumnya untuk membuat
 dan mengembalikan `StoreUserDTO` _class_ seperti berikut
 
-```php
+```php:app\Http\Requests\StoreUserRequest.php
 <?php
 
 namespace App\Http\Requests;
@@ -337,6 +337,7 @@ class StoreUserRequest extends FormRequest
     {
         return Gate::allows('create', User::class);
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -369,7 +370,7 @@ class StoreUserRequest extends FormRequest
 
 Sekarang kita dapat memperbarui _controller_ kita untuk dapat meneruskan (_passing_) __DTO__ ke dalam _action class_
 
-```php
+```php:app\Http\Controllers\UserController.php
 <?php
 
 class UserController extends Controller
@@ -402,6 +403,7 @@ class StoreUserAction
             'email'    => $storeUserDTO->email,
             'password' => $storeUserDTO->password,
         ]);
+
         $user->generateAvatar();
         $this->dispatch(RegisterUserToNewsletter::class);
     }
@@ -434,7 +436,7 @@ php artisan make:controller UnsubscribeUserController -i
 Perhatikan bagaimana kita _passing_ `-i` ke perintah sehingga _controller_ baru kita akan menjadi __"single-use controller"__ yang dapat dipanggil.
 Kita akan memiliki _controller_ yang terlihat seperti berikut:
 
-```php
+```php:app\Http\Controllers\UnsubscribeUserController.php
 <?php
 
 class UnsubscribeUserController extends Controller
@@ -448,7 +450,7 @@ class UnsubscribeUserController extends Controller
 
 Sekarang kita dapat memindahkan kode _method_ kita dan menghapus _method_ `unsubscribe` pada _controller_ kita yang sebelumnya.
 
-```php
+```php:app\Http\Controllers\UnsubscribeUserController.php
 <?php
 
 class UnsubscribeUserController extends Controller
@@ -456,6 +458,7 @@ class UnsubscribeUserController extends Controller
     public function __invoke(Request $request): RedirectResponse
     {
         $request->user->unsubscribeFromNewsletter();
+
         return redirect(route('users.index'));
     }
 }

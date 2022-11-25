@@ -1,0 +1,45 @@
+---
+title: 'Ubah Teks Dengan Perintah Sed'
+date: '2022-05-29'
+type: 'bash'
+draft: false
+summary: 'Cara mencari dan mengubah teks di dalam sebuah file menggunakan perintah (command line) pada Ubuntu'
+---
+
+Cara mencari dan mengubah teks di dalam sebuah file menggunakan baris perintah (_command line_) pada Ubuntu.
+
+Kita dapat menggunakan utilitas (_utility_) bernama _sed_.
+
+_Sed_ sendiri merupakan sebuah aliran editor yang dapat digunakan untuk membaca atau mengedit satu atau lebih sebuah file.
+
+Kita dapat menggunakan perintah seperti berikut untuk menemukan dan mengganti teks pada Ubuntu.
+
+Dalam kasus ini kita mencoba mengubah kata `teks_lama` menjadi `teks_baru` pada file **filename.txt**:
+
+```bash
+sed -i 's/teks_lama/teks_baru/g' filename.txt   
+```
+
+_sed_ merupakan perintah dari utilitas itu sendiri,
+opsi `-i` (yang mempunyai arti _in-place_) memberi tahu _sed_ untuk menulis perubahan ke file asli.
+
+Ekspresi subtitusi (yang ada dalam tanda petik) memiliki arti sebagai berikut:
+- s : Awal dari ekspresi subtitusi
+- teks_lama : Mewakili kata atau _substring_ yang akan diganti (bisa juga berupa _regular expression / RegExr_).
+- teks_baru : Merupakan kata atau _substring_ pengganti teks lama.
+- g : Mewakili _global_, yaitu mengganti semua kata yang mengandung kata yang ingin diganti.
+- i : Mewakili _ignoreCase_, seperti pencarian dan penggantian _case-insensitive_. Ekspresi i diletakkan setelah ekspresi g (_global_).
+
+Sebagai contoh, anggap saja direktori kerja kita saat ini adalah _/var/www/_ dan kita memiliki file bernama "sample.txt" di dalamnya, yang hanya berisi sebuah teks "Halo Kita".
+
+Sekarang jika kita ingin mengganti setiap kemunculan kata "Halo" dengan kata "Hai" di file "sample.txt", kita cukup menggunakan perintah _sed_ berikut:
+
+```bash
+sed -i 's/Halo/Hai/gi' sample.txt   
+```
+
+Atau, kita juga bisa menggunakan cara absolut (lengkap), dengan perintah berikut:
+
+```bash
+sed -i 's/Halo/Hai/gi' /var/www/sample.txt  
+```
