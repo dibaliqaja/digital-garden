@@ -34,7 +34,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, pag
                 <PageTitle>{title}</PageTitle>
               </div>
               <dl className="space-y-10">
-                <div>
+                <div className="mt-[30px]">
                   <dt className="sr-only">Published on</dt>
                   <dd className="flex justify-center items-center text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                     <time dateTime={date} className="flex items-center">
@@ -57,25 +57,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, pag
             className="pb-8 divide-y divide-gray-200 xl:divide-y-0 dark:divide-gray-700 xl:grid xl:grid-cols-4 xl:gap-x-6"
             style={{ gridTemplateRows: 'auto 1fr' }}
           >
-            <div>
-              <div className="hidden xl:block py-4 xl:py-8 border-b border-gray-200 dark:border-gray-700">
-                <Link
-                  href={`/blog/page/${page}`}
-                  className="flex text-primary-500 hover:text-primary-600 dark:hover:text-primary-200"
-                >
-                  <svg viewBox="0 -9 3 24" className="overflow-visible mr-3 w-auto h-6">
-                    <path
-                      d="M3 0L0 3L3 6"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></path>
-                  </svg>
-                  Back to the blog
-                </Link>
-              </div>
+            <div className="xl:sticky xl:top-[50px]">
               <dl className="pt-6 pb-10 xl:pt-11">
                 <dt className="sr-only">Authors</dt>
                 <dd>
@@ -120,21 +102,27 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, pag
               <Comments frontMatter={frontMatter} />
             </div>
             <footer>
-              <div className="text-sm font-medium leading-5 xl:col-start-1 xl:row-start-2">
-                {/* <div className="pt-4 xl:pt-8">
+              <div className="text-sm font-medium leading-5 xl:col-start-1 xl:row-start-2 xl:sticky xl:top-[150px]">
+                <div className="pt-4 xl:pt-8">
                   <Link
                     href={`/blog/page/${page}`}
                     className="flex text-primary-500 hover:text-primary-600 dark:hover:text-primary-200"
                   >
-                    <svg viewBox="0 -9 3 24" class="overflow-visible mr-3 w-auto h-6"><path d="M3 0L0 3L3 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    <svg viewBox="0 -9 3 24" className="overflow-visible mr-3 w-auto h-6 pb-1">
+                      <path
+                        d="M3 0L0 3L3 6"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      ></path>
+                    </svg>
                     Back to the blog
                   </Link>
-                </div> */}
+                </div>
                 {tags && (
                   <div className="py-4">
-                    {/* <h2 className="text-sm tracking-wide text-gray-500 dark:text-gray-400 mb-1">
-                      Tags
-                    </h2> */}
                     <div className="flex flex-wrap">
                       {tags.map((tag) => (
                         <Tag key={tag} text={tag} />
