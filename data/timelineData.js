@@ -76,22 +76,22 @@ const timelineData = [
       </>
     ),
   },
-  {
-    time: 'Mar 1999',
-    role: (
-      <>
-        Born and Grow up in{' '}
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://id.wikipedia.org/wiki/Kabupaten_Tuban/"
-        >
-          Tuban District
-        </a>
-        , East Java.
-      </>
-    ),
-  },
+  // {
+  //   time: 'Mar 1999',
+  //   role: (
+  //     <>
+  //       Born and Grow up in{' '}
+  //       <a
+  //         target="_blank"
+  //         rel="noopener noreferrer"
+  //         href="https://id.wikipedia.org/wiki/Kabupaten_Tuban/"
+  //       >
+  //         Tuban District
+  //       </a>
+  //       , East Java.
+  //     </>
+  //   ),
+  // },
 ]
 
 module.exports = timelineData
