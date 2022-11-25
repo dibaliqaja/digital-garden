@@ -1925,9 +1925,9 @@
   "version" "6.2.1"
 
 "caniuse-lite@^1.0.30001272", "caniuse-lite@^1.0.30001280", "caniuse-lite@^1.0.30001283":
-  "integrity" "sha512-+MXEMczJ4FuxJAUp0jvAl6Df0NI/OfW1RWEE61eSmzS7hw6lz4IKutbhbXendwq8BljfFuHtu26VWsg4afQ7Ng=="
-  "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001307.tgz"
-  "version" "1.0.30001307"
+  "integrity" "sha512-aOBHrLmTQw//WFa2rcF1If9fa3ypkC1wzqqiKHgfdrXTWcU8C4gKVZT77eQAPWN1APys3+uQ0Df07rKauXGEYA=="
+  "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001434.tgz"
+  "version" "1.0.30001434"
 
 "ccount@^1.0.0":
   "integrity" "sha512-vlNK021QdI7PNeiUh/lKkC/mNHHfV0m/Ad5JoI0TYtlBnJAslM/JIkm/tGC88bkLIwO6OQ5uV6ztS6kVAtCDlg=="
@@ -4807,10 +4807,10 @@
     "commander" "^5.0.0"
     "express" "^4.17.1"
 
-"next-themes@^0.0.14":
-  "integrity" "sha512-x09OaM+wg3SIlEjOv8B21aw/E36jxTtfW3Dm/DPwMsSMluGt7twe1LigA6nc+mXP1u0qu9MxBaIrPPH6UTiKnA=="
-  "resolved" "https://registry.npmjs.org/next-themes/-/next-themes-0.0.14.tgz"
-  "version" "0.0.14"
+"next-themes@^0.2.1":
+  "integrity" "sha512-B+AKNfYNIzh0vqQQKqQItTS8evEouKD7H5Hj3kmuPERwddR2TxvDSFZuTj6T7Jfn1oyeUyJMydPl1Bkxkh0W7A=="
+  "resolved" "https://registry.npmjs.org/next-themes/-/next-themes-0.2.1.tgz"
+  "version" "0.2.1"
 
 "next@*", "next@^12.1.0", "next@>=10.2.0":
   "integrity" "sha512-s885kWvnIlxsUFHq9UGyIyLiuD0G3BUC/xrH0CEnH5lHEWkwQcHOORgbDF0hbrW9vr/7am4ETfX4A7M6DjrE7Q=="

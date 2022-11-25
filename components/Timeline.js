@@ -2,7 +2,7 @@ import timelineData from '@/data/timelineData'
 
 const TimelineItem = ({ time, role, company, companyURL, companyBio, works, last }) => {
   return (
-    <li className={`relative ml-2.5 !my-0 pl-5 border-l border-[#abaaed] ${last ? '' : 'pb-6'}`}>
+    <li className={`relative ml-2.5 !my-0 pl-5 border-l border-[#0284c7] ${last ? '' : 'pb-6'}`}>
       <div className="font-semibold leading-[18px] mb-4 pt-0.5">{time}</div>
       <div>
         {role}{' '}

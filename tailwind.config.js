@@ -60,7 +60,7 @@ module.exports = {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        primary: colors.indigo,
+        primary: colors.blue,
         gray: colors.gray,
         dark: '#22272e',
         code: {

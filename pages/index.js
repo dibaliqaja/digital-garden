@@ -62,11 +62,11 @@ export default function Home({ posts }) {
                 </Link>
                 <Link href="/snippets" className="hover:underline underline-offset-8">
                   <Twemoji emoji="dna" />
-                  <span className="ml-2">Useful snippets collected by me</span>
+                  <span className="ml-2">Useful snippets</span>
                 </Link>
                 <Link href="/about" className="hover:underline underline-offset-8">
                   <Twemoji emoji="face-with-monocle" />
-                  <span className="ml-2">More about me and myself</span>
+                  <span className="ml-2">More about me</span>
                 </Link>
                 <Link href="/resume" className="hover:underline underline-offset-8">
                   <Twemoji emoji="briefcase" />
@@ -94,7 +94,7 @@ export default function Home({ posts }) {
                   <div className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
                     <dl>
                       <dt className="sr-only">Published on</dt>
-                      <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                      <dd className="text-lg font-medium leading-6 text-gray-500 dark:text-gray-400">
                         <time dateTime={date}>{formatDate(date)}</time>
                       </dd>
                     </dl>
@@ -119,13 +119,13 @@ export default function Home({ posts }) {
                           {summary}
                         </div>
                       </div>
-                      <div className="text-base font-medium leading-6">
+                      <div className="text-lg font-medium leading-6">
                         <Link
                           href={`/blog/${slug}`}
-                          className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-200"
+                          className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-200"
                           aria-label={`Read "${title}"`}
                         >
-                          Read more &rarr;
+                          Read more
                         </Link>
                       </div>
                     </div>
@@ -136,13 +136,13 @@ export default function Home({ posts }) {
           })}
         </ul>
         {posts.length > MAX_DISPLAY && (
-          <div className="flex justify-end text-base font-medium leading-6">
+          <div className="flex justify-end text-xl font-medium leading-6">
             <Link
               href="/blog"
-              className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-200"
+              className="text-primary-600 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-200"
               aria-label="all posts"
             >
-              All Posts &rarr;
+              All Posts
             </Link>
           </div>
         )}
