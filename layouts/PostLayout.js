@@ -134,7 +134,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, pag
                   <div className="flex justify-between py-4 xl:block xl:space-y-8 xl:py-8">
                     {prev && (
                       <div>
-                        <h2 className="text-sm mb-1 tracking-wide text-gray-500 dark:text-gray-400">
+                        <h2 className="text-sm tracking-wide text-gray-500 dark:text-gray-400">
                           Previous Post
                         </h2>
                         <div className="text-primary-500 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
