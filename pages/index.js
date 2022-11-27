@@ -101,10 +101,10 @@ export default function Home({ posts }) {
                     <div className="space-y-5 xl:col-span-3">
                       <div className="space-y-6">
                         <div>
-                          <h2 className="text-3xl font-bold mb-1 tracking-tight">
+                          <h2 className="text-3xl font-bold tracking-tight mb-3">
                             <Link
                               href={`/blog/${slug}`}
-                              className="text-gray-900 dark:text-gray-100"
+                              className="text-gray-900 hover:text-primary-600 dark:text-gray-100 dark:hover:text-primary-500"
                             >
                               {title}
                             </Link>
@@ -119,15 +119,6 @@ export default function Home({ posts }) {
                           {summary}
                         </div>
                       </div>
-                      <div className="text-lg font-medium leading-6">
-                        <Link
-                          href={`/blog/${slug}`}
-                          className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-200"
-                          aria-label={`Read "${title}"`}
-                        >
-                          Read more
-                        </Link>
-                      </div>
                     </div>
                   </div>
                 </article>
@@ -136,10 +127,10 @@ export default function Home({ posts }) {
           })}
         </ul>
         {posts.length > MAX_DISPLAY && (
-          <div className="flex justify-end text-xl font-medium leading-6">
+          <div className="flex justify-center leading-6">
             <Link
               href="/blog"
-              className="text-primary-600 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-200"
+              className="inline mt-7 mb-7 px-6 py-4 text-xl font-medium leading-3 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg shadow focus:outline-none focus:shadow-outline-blue hover:bg-blue-700 dark:hover:bg-blue-500"
               aria-label="all posts"
             >
               All Posts
