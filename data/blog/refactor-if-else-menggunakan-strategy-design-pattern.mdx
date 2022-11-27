@@ -1,0 +1,135 @@
+---
+title: Refactor (if / else if / else) Menggunakan Strategy Design Pattern
+date: '2022-11-27'
+tags: ['tips','design-pattern','fundamental','tutorial']
+draft: false
+summary: Strategy Design Pattern adalah pola desain perilaku yang memungkinkan kita menentukan algoritma, menempatkan masing-masing algoritma ke dalam class yang terpisah, dan membuat objeknya dapat dipertukarkan. 
+images: ['/static/images/quit.jpg']
+authors: ['default']
+---
+
+
+### Pengantar
+
+_Strategy Design Pattern_ adalah pola desain perilaku yang memungkinkan kita menentukan algoritma, menempatkan masing-masing algoritma
+ke dalam _class_ yang terpisah, dan membuat objeknya dapat dipertukarkan.
+
+Dalam Pola Desain Strategi (_Strategy Design Pattern_), sebuah _behaviour class_ atau algoritmanya dapat diubah saat dijalankan (_at runtime_).
+
+Pada pola desain ini, kita membuat objek yang mewakili berbagai strategi dan objek konteks yang perilakunya (_behaviour_) bervariasi
+sesuai objek strateginya. Objek strategi mengubah algoritma eksekusi program dari objek konteks (_context object_).
+
+Polanya yaitu:
+1. Mendefinisikan kelompok algoritma
+2. Merangkum setiap algoritma
+3. Membuat algoritma dapat dipertukarkan dalam kelompok tertentu
+
+Mari kita coba implementasikan pola ini pada cuplikan kode dibawah
+
+```php
+<?php
+
+class Transport
+{
+	public function chooseTransport($mode)
+	{
+		if ($mode == "CAR") {
+			echo "Go to the office by car";
+		} else if ($mode == "BUS") {
+			echo "Go to the office by bus";
+		} else {
+			echo "Go to the office by taxi";
+		}
+	}
+}
+
+$transport = new Transport();
+$transport->chooseTransport("CAR");
+```
+
+Dapat kita lihat bahwa, kode diatas akan selalu mempengaruhi implementasi _business logic_ di setiap kali kita perlu menambah
+atau memodifikasi mode pilihan transportasi apapun.
+
+Sekarang mari kita coba terapkan pola desain strategi pada kode diatas dengan merefaktornya,
+kita bisa membuatnya menggunakan _interface_.
+
+```php
+<?php
+
+interface TransportStrategy
+{
+    public function selectTransport();
+}
+
+class Car implements TransportStrategy
+{
+	public function selectTransport()
+	{
+		echo "Go to the office by car";
+	}
+}
+
+class Bus implements TransportStrategy
+{
+	public function selectTransport()
+	{
+		echo "Go to the office by bus";
+	}
+}
+
+class Taxi implements TransportStrategy
+{
+	public function selectTransport()
+	{
+		echo "Go to the office by taxi";
+	}
+}
+
+class TransportContext
+{
+    private $transportStrategy;
+
+    public function __construct(TransportStrategy $transportStrategy)
+    {
+        $this->transportStrategy = $transportStrategy;
+    }
+
+    public function chooseTransport()
+    {
+        $this->transportStrategy->selectTransport();
+    }
+}
+
+class Transport
+{
+	public function selectTransport(TransportStrategy $transportStrategy)
+	{
+		$transportContext = new TransportContext($transportStrategy);
+        $transportContext->chooseTransport();
+	}
+}
+
+$transport = new Transport();
+$transport->selectTransport(new Car());
+```
+
+Kelihatan meribetkan ya? haha :P
+
+Memang studi kasus yang seperti ini sangat _worth it_ apabila kode kita sudah terlalu kompleks dan semakin besar.
+Perlu efisiensi agar antar kode yang sudah ditulis sebelumnya tidak mengganggu ketika ada penambahan algoritma atau strategi baru.
+
+Untuk cuplikan kode diatas hanyalah sebatas contoh agar kita dapat lebih mudah memahami dari konsep pola ini dan dapat lebih mudah dalam penggambarannya
+apabila pada suatu saat kita ingin mengimplementasikan pola ini.
+
+Kelebihan menggunakan pola desain strategi ini yaitu
+1. Ketika kita menambahkan strategi baru tidak akan mengganggu kode yang sebelumnya sudah ada. 
+2. Penghapusan maupun _Refactoring_ kode dari strategi sebelumnya bersifat fleksibel. 
+3. Mudah untuk melakukan pengujian tunggal pada kode kita (_single test units_).
+
+
+Sekian dan Semoga bermanfaat. Sampai Jumpa. <i className="twa twa-waving-hand"></i>
+
+
+Referensi:
+- [Strategy Design Pattern](https://refactoring.guru/design-patterns/strategy)
+- [Refactor if/elseif/elseif using Strategy Design Pattern](https://medium.com/aia-sg-techblog/refactor-if-elseif-elseif-using-strategy-design-pattern-80c51913a539)
