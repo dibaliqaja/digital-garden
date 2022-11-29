@@ -4,6 +4,7 @@
 
 .remark-code-title {
   @apply px-5 py-3 font-mono text-sm font-bold text-gray-200 bg-gray-700 rounded-t;
+  overflow-wrap: break-word;
 }
 
 .remark-code-title + div > pre {
@@ -33,7 +34,7 @@
   border-color: #222;
 }
 .prose pre .code-line.highlight-line {
-  border-color: rgba(99, 102, 241, var(--tw-border-opacity)) !important;
+  border-color: rgba(59, 130, 246, var(--tw-border-opacity)) !important;
 }
 
 @media (max-width: 768px) {
