@@ -1,0 +1,298 @@
+---
+title: Apa Itu Facades Pada Laravel Dan Bagaimana Cara Kerjanya
+date: '2022-11-30'
+tags: ['php','laravel','fundamental']
+draft: false
+summary: Bagi para `Artisan` Laravel, seringkali menjumpai yang namanya Facades. Apa itu dan bagaimana cara kerjanya.
+images: ['/static/images/quit.jpg']
+authors: ['default']
+---
+
+### Pengantar
+
+Bagi para `Artisan` Laravel, seringkali menjumpai yang namanya __Facades__. Apa itu dan bagaimana cara kerjanya.
+
+Berdasarkan dari _official_ dokumentasi Laravel, _facade_ sendiri merupakan
+
+- Penyedia antarmuka "statis" ke _class_ yang tersedia di dalam __service container__ aplikasi
+- Berfungsi sebagai "_proxy static_" untuk mendasari _class_ di dalam __service container__ aplikasi
+- Laravel sendiri mempunyai banyak _facade_ yang disediakan hampir untuk semua fitur yang ada pada Laravel
+
+Sebelum masuk lebih dalam mengenai _facade_, penting untuk memahami apa itu _static methods_ dan _non-static methods_ pada PHP.
+
+### __Static Methods__
+
+Pada _static methods_, kita tidak diharuskan membuat _instance class_ baru untuk mereferensikan.
+_Static methods_ menggunakan titik dua ganda (__::__) untuk mengakses properti atau _method_
+
+```php
+<?php
+
+class Person {
+    const NAME = 'John';
+}
+
+echo Person::NAME;  // John
+```
+
+Kata kunci yang sudah ada untuk menggunakan _static methods_ yaitu `self`, `static`, `parents` dimana digunakan untuk
+mereferensikan properti atau _method_ dalam suatu _class_
+
+```php
+<?php
+
+class Person {
+    private const NAME = "John";
+    
+    public static function name() {
+        echo self::NAME;
+    }
+}
+
+Person::name();  // John
+```
+
+### __Non-static Methods__
+
+_Non-static methods_ mengharuskan _class_ tertentu dibuat _instance_-nya. Yang artinya, mereka membutuhkan turunan dari _class_ untuk dieksekusi
+
+```php
+<?php
+
+class Person {
+	public function name($name) {   
+		echo $name;
+	}
+}
+
+
+$person = new Person;  // Membuat instance class baru
+$person->name('John'); // John
+```
+
+Sekarang setelah kita membahas _static methods_ dan _non-static methods_ saatnya kita bisa lebih mengetahui tentang _facade_ pada Laravel.
+
+### __Laravel Facades__
+
+Pada direktori `vendors > laravel  > framework > src > Illuminate > Support > Facades`, 
+ada berbagai daftar file _facade_ yang disertakan oleh Laravel secara _default_.
+
+Jadi _facade_ pada Laravel nantinya dapat didefinisikan menggunakan _namespace_ `Illuminate\Support\Facades`.
+
+Di dalam direktori _Facades_ akan terlihat seperti berikut struktur filenya
+
+![Facades Directory](/static/images/facades.png "Facades Directory")
+
+Kita akan mencoba menggunakan kode yang ada pada `Log.php` untuk mengetahui _facade_ lebih detail.
+
+```php
+<?php
+
+namespace Illuminate\Support\Facades;
+
+class Log extends Facade
+{
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string
+     */
+    protected static function getFacadeAccessor()
+    {
+        return 'log';
+    }
+}
+```
+
+Di dalam _class_ `Log`, kita memiliki _protected access modifier method_ yaitu `getFacadeAccessor()` dan apa yang dilakukan oleh _method_ tersebut
+hanyalah mengembalikan __'log'__.
+
+Dengan mengembalikan (_return_) nama _facade_ __'log'__ ini, kita dapat mengakses _facade_ dimana saja pada Laravel tanpa harus menginialisasi terlebih dahulu.
+
+Jadi kita bisa melakukan sesuatu seperti `Log::info('Hello info');` dimana pun berada dengan sangat mudah.
+
+Seperti yang kita lihat, _facade_ membuat kode kita lebih mudah untuk dibaca, lebih teratur, dan membuat pengujian (_unit testing_) lebih mudah untuk dilakukan.
+
+### Bagaimana membuat _Facades_ pada Laravel
+
+Pada bagian ini, kita akan mencoba untuk membuat _facade_ sendiri. Tujuannya yaitu untuk memahami bagaimana cara kerja _facade_ pada Laravel.
+
+Kita akan mulai dengan membuat `PersonFacade` yang akan meng-_extend_ properti dari basis _Facades_ yang mengembalikan properti nama.
+Properti nama ini akan bertipe _string_ dan akan dikembalikan setiap kali kita membuat _instance class_ baru.
+
+Kita tidak akan membuat _facade_ menggunakan konvensi Laravel yang ada, dimana kita akan membuat file baru didalam folder bernama `facade` dibawah folder `app`.
+Yang nanti diperlukan juga mendaftarkannya pada _config providers_ yang ada pada Laravel.
+
+Jadi, disini kita akan memanfaatkan satu file saja menggunakan `web.php` yang ada pada folder `routes`.
+Karena kita hanya akan mencoba melihat bagaimana _facade_ itu bekerja pada sistem Laravel.
+
+Mari kita mulai dengan file `web.php` seperti dibawah
+
+```php:routes/web.php
+<?php
+
+// use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+class Person {
+    public function persons() {
+        return 'John';
+    }
+}
+
+app()->bind('person', function() {
+    return new Person;
+});
+```
+
+Kita telah membuat _class_ `Person`, dan didalamnya kita memiliki _non-static method_ `name()` yang mengembalikan sebuah _string_.
+
+Kemudian kita memanggil _bind method_ untuk membuatnya selalu menginstansiai _person_ baru sehingga kita tidak perlu melakukannya secara manual lagi.
+
+Selanjutnya, mari kita buat basis _class Facade_ tetap dalam file `web.php` yang sama
+
+```php:routes/web.php {30-38} showLineNumbers
+<?php
+
+// use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+class Person {
+    public function persons() {
+        return 'John';
+    }
+}
+
+app()->bind('person', function() {
+    return new Person;
+});
+
+class Facade {
+    public static function __callStatic($name, $args) {
+        return app()->make(static::getFacadeAccessor())->$name();
+    }
+
+    protected static function getFacadeAccessor() {
+        // override
+    }
+}
+```
+
+Setiap _facade_ yang kita buat nantinya akan meng-_extend_ properti dari basis _class facade_ itu sendiri.
+
+Di dalam _class_ `Facade` kita memiliki _magic method_ yaitu `__callStatic()` yang membantu kita untuk _resolve_ `static::getFacadeAccessor()`
+dari _container_ dengan menggunakan `app()->make()`. Dengan itu kita dapat mengakses properti `$name`.
+
+```php
+class PersonFacade extends Facade {
+    protected static function getFacadeAccessor() {
+        return 'person';
+    }
+}
+```
+
+Disini, `PersonFacade` mewarisi basis properti _facade_. Kemudian kita mengganti `getFacadeAccessor()`
+dan menentukan nilai yang dikembalikan menjadi apapun yang kita miliki setiap kali kita membuat _instance_ di _person_ yang terikat diatas.
+
+```php
+dd(PersonFacade::persons()); // John
+```
+
+Saat kita mencoba memanggil _facade_ yang telah kita buat, dia akan mengembalikan "John" seperti yang telah kita ekspektasikan.
+Kode lengkapnya akan terlihat seperti berikut
+
+
+```php:routes/web.php
+<?php
+
+// use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+class Person {
+    public function persons() {
+        return 'John';
+    }
+}
+
+app()->bind('person', function() {
+    return new Person;
+});
+
+class Facade {
+    public static function __callStatic($name, $args) {
+        return app()->make(static::getFacadeAccessor())->$name();
+    }
+
+    protected static function getFacadeAccessor() {
+        // override
+    }
+}
+
+class PersonFacade extends Facade {
+    protected static function getFacadeAccessor() {
+        return 'person';
+    }
+}
+
+dd(PersonFacade::persons()); // John
+```
+
+### Penutup
+
+Jadi, pada Laravel, hampir semua layanan (_service_) memiliki _facade class_. 
+Dimana _class_ ini meng-_extend_ _class_ basis _facade_ yang merupakan bagian dari `Illuminate/Support`.
+
+Satu-satunya hal yang perlu diterapkan adalah _method_ `getFacadeAccessor()`, 
+yaitu mengembalikan nama _service_ yang ada dalam _container_.
+
+Dengan memanfaatkan _facade_ juga dapat membuat kode kita lebih mudah untuk dibaca, 
+lebih teratur, dan membuat pengujian (_unit testing_) lebih mudah untuk dilakukan.
+
+Sekian dan Semoga bermanfaat. Sampai Jumpa. <i className="twa twa-waving-hand"></i>
+
+Referensi:
+- [Laravel Facades](https://laravel.com/docs/9.x/facades)
+- [How To Use Facades In Laravel](https://www.freecodecamp.org/news/how-to-use-facades-in-laravel/)
+- [What Is Facades Used In Laravel](https://stackoverflow.com/questions/42223986/what-is-facades-used-in-laravel)
