@@ -5,7 +5,8 @@ import '@/css/timeline.css'
 import { ThemeProvider } from 'next-themes'
 import Head from 'next/head'
 
-import Analytics from '@/components/analytics'
+// import Analytics from '@/components/analytics'
+import { Analytics } from '@vercel/analytics/react'
 import LayoutWrapper from '@/components/LayoutWrapper'
 
 import Router from 'next/router'
