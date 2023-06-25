@@ -5,8 +5,10 @@ import SnippetsLayout from '@/layouts/SnippetsLayout'
 
 export const POSTS_PER_PAGE = 5
 
-export async function getStaticProps() {
-  const snippets = await getAllFilesFrontMatter('snippets')
+export async function getStaticProps({ locale, defaultLocale, locales }) {
+  const otherLocale = locale !== defaultLocale ? locale : ''
+  const snippets = await getAllFilesFrontMatter('snippets', otherLocale)
+
   return { props: { snippets } }
 }
 

@@ -5,15 +5,24 @@ import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import NextImage from 'next/image'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 const LayoutWrapper = ({ children }) => {
   const [navShow, setNavShow] = useState(false)
   const onToggleNav = () => setNavShow((status) => !status)
 
+  const router = useRouter()
+  const { locale, locales } = router
+
+  const changeLanguage = (e) => {
+    const locale = e.target.value
+    router.push(router.asPath, router.asPath, { locale })
+  }
+
   return (
     <>
       <MobileNav navShow={navShow} onToggleNav={onToggleNav} />
-      <header className="overflow-x-hidden backdrop-blur supports-backdrop-blur:bg-white/95 py-3 sticky top-0 z-40 bg-white/75 dark:bg-dark/75">
+      <header className="overflow-x-hidden backdrop-blur supports-backdrop-blur:bg-white/95 pt-5 pb-3 sticky top-0 z-40 bg-white/75 dark:bg-dark/75">
         <div className="mx-auto max-w-3xl xl:max-w-5xl flex items-center justify-between px-3 xl:px-0">
           <div>
             <Link href="/" aria-label="Iqbal's Blog">
@@ -42,6 +51,18 @@ const LayoutWrapper = ({ children }) => {
                 </Link>
               ))}
             </div>
+            <select
+              onChange={changeLanguage}
+              defaultValue={locale}
+              style={{ textAlignLast: 'center' }}
+              className="text-gray-900 dark:text-gray-100 text-shadow-sm text-sm bg-transparent tracking-wide ml-2"
+            >
+              {locales.map((e) => (
+                <option value={e} key={e} className="font-medium text-black">
+                  {e === 'id' ? 'ID' : 'EN'}
+                </option>
+              ))}
+            </select>
             <ThemeSwitch />
             <button
               className="w-8 h-8 ml-2 mr-1 rounded sm:hidden"

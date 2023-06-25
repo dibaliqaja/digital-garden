@@ -3,6 +3,8 @@ import Pagination from '@/components/Pagination'
 import Tag from '@/components/Tag'
 import formatDate from '@/lib/utils/formatDate'
 import { useState } from 'react'
+import useTranslation from 'next-translate/useTranslation'
+import { useRouter } from 'next/router'
 
 export default function ListLayout({ posts, title, initialDisplayPosts = [], pagination }) {
   const [searchValue, setSearchValue] = useState('')
@@ -10,6 +12,9 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
     const searchContent = frontMatter.title + frontMatter.summary + frontMatter.tags.join(' ')
     return searchContent.toLowerCase().includes(searchValue.toLowerCase())
   })
+
+  const { t } = useTranslation()
+  const { locale } = useRouter()
 
   // If initialDisplayPosts exist, display it if no searchValue is specified
   const displayPosts =
@@ -24,10 +29,10 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
           </h1>
           <div className="relative">
             <input
-              aria-label="Search articles"
+              aria-label={t('common:search')}
               type="text"
               onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Search articles"
+              placeholder={t('common:search')}
               className="block w-full px-4 py-2 text-gray-900 bg-white border border-gray-300 rounded-md dark:border-gray-900 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:text-gray-100"
             />
             <svg
@@ -47,7 +52,7 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
           </div>
         </div>
         <ul className="pt-3">
-          {!filteredBlogPosts.length && 'No posts found.'}
+          {!filteredBlogPosts.length && t('common:no_post')}
           {displayPosts.map((frontMatter) => {
             const { slug, date, title, summary, tags } = frontMatter
             return (
@@ -56,7 +61,7 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
                   <dl>
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                      <time dateTime={date}>{formatDate(date)}</time>
+                      <time dateTime={date}>{formatDate(date, locale)}</time>
                     </dd>
                   </dl>
                   <div className="space-y-3 xl:col-span-3">

@@ -4,24 +4,34 @@ import { formatSlug, getFileBySlug, getFiles } from '@/lib/mdx'
 
 const DEFAULT_LAYOUT = 'PostSimple'
 
-export async function getStaticPaths() {
-  const snippets = getFiles('snippets')
+export async function getStaticPaths({ locales, defaultLocale }) {
+  const localesSnippets = locales
+    .map((locale) => {
+      const otherLocale = locale !== defaultLocale ? locale : ''
+      const snippets = getFiles('snippets', otherLocale)
+      return snippets.map((post) => [post, locale])
+    })
+    .flat()
+
   return {
-    paths: snippets.map((p) => ({
+    paths: localesSnippets.map(([p, l]) => ({
       params: {
         slug: formatSlug(p).split('/'),
       },
+      locale: l,
     })),
     fallback: false,
   }
 }
 
-export async function getStaticProps({ params }) {
-  const snippet = await getFileBySlug('snippets', params.slug.join('/'))
+export async function getStaticProps({ locale, defaultLocale, locales, params }) {
+  const otherLocale = locale !== defaultLocale ? locale : ''
+  const snippet = await getFileBySlug('snippets', params.slug.join('/'), otherLocale)
+
   return { props: { snippet } }
 }
 
-export default function Snippet({ snippet }) {
+export default function Snippet({ snippet, availableLocales }) {
   const { mdxSource, frontMatter } = snippet
 
   return (
@@ -31,6 +41,7 @@ export default function Snippet({ snippet }) {
           layout={frontMatter.layout || DEFAULT_LAYOUT}
           mdxSource={mdxSource}
           frontMatter={frontMatter}
+          availableLocales={availableLocales}
         />
       ) : (
         <div className="mt-24 text-center">

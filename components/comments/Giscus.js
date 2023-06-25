@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
 
 import siteMetadata from '@/data/siteMetadata'
+import useTranslation from 'next-translate/useTranslation'
 
 const Giscus = ({ mapping }) => {
+  const { t } = useTranslation()
   const [enableLoadComments, setEnabledLoadComments] = useState(true)
   const { theme, resolvedTheme } = useTheme()
   const COMMENTS_ID = 'comments-container'

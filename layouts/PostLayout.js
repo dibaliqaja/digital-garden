@@ -9,6 +9,7 @@ import Tag from '@/components/Tag'
 import Twemoji from '@/components/Twemoji.js'
 import siteMetadata from '@/data/siteMetadata'
 import SocialButtons from '@/components/SocialButtons'
+import useTranslation from 'next-translate/useTranslation'
 
 const postDateTemplate = { year: 'numeric', month: 'short', day: 'numeric' }
 
@@ -22,6 +23,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, pag
     readingTime: { text: readingTimeText },
   } = frontMatter
   const postUrl = `${siteMetadata.siteUrl}/blog/${slug}`
+  const { t } = useTranslation()
   return (
     <SectionContainer>
       <BlogSeo url={postUrl} authorDetails={authorDetails} {...frontMatter} />
@@ -118,7 +120,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, pag
                         strokeLinejoin="round"
                       ></path>
                     </svg>
-                    Back to the blog
+                    {t('common:back')}
                   </Link>
                 </div>
                 {tags && (
@@ -135,7 +137,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, pag
                     {prev && (
                       <div>
                         <h2 className="text-sm tracking-wide text-gray-500 dark:text-gray-400">
-                          Previous Post
+                          {t('common:preva')}
                         </h2>
                         <div className="text-primary-500 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                           <Link href={`/blog/${prev.slug}`} className="text-base">
@@ -147,7 +149,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, pag
                     {next && (
                       <div>
                         <h2 className="text-sm tracking-wide text-gray-500 dark:text-gray-400">
-                          Next Post
+                          {t('common:nexta')}
                         </h2>
                         <div className="text-primary-500 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                           <Link href={`/blog/${next.slug}`} className="text-base">

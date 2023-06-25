@@ -4739,6 +4739,18 @@
   "resolved" "https://registry.npmjs.org/next-themes/-/next-themes-0.2.1.tgz"
   "version" "0.2.1"
 
+"next-translate-plugin@^2.3.0":
+  "integrity" "sha512-U4nWdWvYZuPDw/eBTXpg7i69pdbnQPcTa1WTJItIjB8VkkD/wET/Smy8OucU85Xlfk+rOZU1HVCOTSUrSMSYxQ=="
+  "resolved" "https://registry.npmjs.org/next-translate-plugin/-/next-translate-plugin-2.3.0.tgz"
+  "version" "2.3.0"
+  dependencies:
+    "typescript" "4.5.2"
+
+"next-translate@^2.3.1":
+  "integrity" "sha512-aD6ayxPStDP7xuwderNWY4JKFGfi5bIFY3eyvAoVIzFIqOHzt27afFjaRLjzbsjOW6xPVqnNx/H8puO/MuYZOw=="
+  "resolved" "https://registry.npmjs.org/next-translate/-/next-translate-2.3.1.tgz"
+  "version" "2.3.1"
+
 "next@^12.1.0":
   "integrity" "sha512-s885kWvnIlxsUFHq9UGyIyLiuD0G3BUC/xrH0CEnH5lHEWkwQcHOORgbDF0hbrW9vr/7am4ETfX4A7M6DjrE7Q=="
   "resolved" "https://registry.npmjs.org/next/-/next-12.1.0.tgz"
@@ -6113,6 +6125,11 @@
   "integrity" "sha512-lyACZh1cu+vpfYY3DG/bvsGLXXbdoDDpWxmqta10IQUdMXisMXOEyl+jos+YT9uBbzK4QaKYBjT3R0kTJO0Slw=="
   "resolved" "https://registry.npmjs.org/typed.js/-/typed.js-2.0.12.tgz"
   "version" "2.0.12"
+
+"typescript@4.5.2":
+  "integrity" "sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw=="
+  "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.5.2.tgz"
+  "version" "4.5.2"
 
 "unbox-primitive@^1.0.1":
   "integrity" "sha512-tZU/3NqK3dA5gpE1KtyiJUrEB0lxnGkMFHptJ7q6ewdZ8s12QrODwNbhIJStmJkd1QDXa1NRA8aF2A1zk/Ypyw=="
