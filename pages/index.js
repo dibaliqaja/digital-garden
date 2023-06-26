@@ -64,14 +64,14 @@ export default function Home({ posts }) {
                   <Twemoji emoji="dna" />
                   <span className="ml-2">Useful snippets</span>
                 </Link>
-                <Link href="/about" className="hover:underline underline-offset-8">
+                {/* <Link href="/about" className="hover:underline underline-offset-8">
                   <Twemoji emoji="face-with-monocle" />
                   <span className="ml-2">More about me</span>
                 </Link>
                 <Link href="/resume" className="hover:underline underline-offset-8">
                   <Twemoji emoji="briefcase" />
                   <span className="ml-2">My resume</span>
-                </Link>
+                </Link> */}
               </div>
               <p className="my-8">
                 Happy reading <Twemoji emoji="clinking-beer-mugs" />

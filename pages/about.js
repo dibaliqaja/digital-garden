@@ -1,5 +1,6 @@
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import { getFileBySlug } from '@/lib/mdx'
+import FourZeroFour from './404'
 
 const DEFAULT_LAYOUT = 'AuthorLayout'
 
@@ -9,13 +10,14 @@ export async function getStaticProps() {
 }
 
 export default function About({ authorDetails }) {
-  const { mdxSource, frontMatter } = authorDetails
+  return <FourZeroFour />
+  // const { mdxSource, frontMatter } = authorDetails
 
-  return (
-    <MDXLayoutRenderer
-      layout={frontMatter.layout || DEFAULT_LAYOUT}
-      mdxSource={mdxSource}
-      frontMatter={frontMatter}
-    />
-  )
+  // return (
+  //   <MDXLayoutRenderer
+  //     layout={frontMatter.layout || DEFAULT_LAYOUT}
+  //     mdxSource={mdxSource}
+  //     frontMatter={frontMatter}
+  //   />
+  // )
 }
