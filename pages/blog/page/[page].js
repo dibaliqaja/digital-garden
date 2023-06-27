@@ -84,8 +84,8 @@ export default function PostPage({
   return (
     <>
       <PageSeo
-        title={siteMetadata.title}
-        description={siteMetadata.description}
+        title={siteMetadata.title[locale]}
+        description={siteMetadata.description[locale]}
         availableLocales={availableLocales}
       />
       <ListLayout
